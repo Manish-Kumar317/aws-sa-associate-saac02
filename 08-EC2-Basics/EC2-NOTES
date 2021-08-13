@@ -1,0 +1,251 @@
+Arch
+    * EC2 is AZ resellient service
+    * An ec2 in one az cannot be connected to NIC or EBS from a different az
+    * Use cases
+        * Traditional os+app 
+        * Long running compute apps 
+        * Server style applications
+        * Burst or steady state load
+        * Monolithic
+Instance types
+    * General Purpose
+        * Default - Eqaul ratio resources
+    * Compute optimised
+        * ML,Media processing,HPC,gaming
+    * Memory optimised
+        * Process large in memory
+    * Accelerated Computing
+        * Hardware GPU, FPGA
+    * Storage optimised 
+        * Random I/O. Elastic search , database, analytics
+    * https://learn.cantrill.io/courses/730712/lectures/14550451
+    2021-08-03-11-17-43.png
+    * size  
+    R5dn.8xlarge
+    || |     |_______ size
+    || |_____________ option such as network storage or processor     
+    ||________________ generation
+    |__________________ Type of instance
+
+Storage Refresher
+    * Since Ec2 instances move between different underlying hosts EBS network store is used
+    * types 
+        * Direct - Local storage on the ec2 instance
+        * Network - Since Ec2 instances move between different underlying hosts EBS network store is used. Onprem fiberchannel
+        * Ephemeral - Temp storage
+        * Persistant - Lives on past of the lifetime of ec instance
+    * Key terms
+        * Block storage
+            * Volume addressed uniquely  as blocks.
+            * OS creates a filesystem from block storage as NTFS
+            * Stored as boot volume in ec2 instance
+            * can be mounted and booted
+        * File system
+            * Presented as file share
+            * Can be mounted but not booted
+            * NFS, EFS
+        * Object store
+            * collection of objects
+            * Not mountable and not bootable
+        * Performance
+            * IO - Block size. Size of minimum block available
+            * IOPS - Number of I/O operations for a second
+            * Throughput - Number of bits transferred in a second
+            -------------- Formula -------------------
+                  IO * IOPS = throughput
+EBS (Elastic Block Storage)
+ * Encryption using KMS
+ * Provisioned in AZ. AZ resellient
+ * Attached over a network
+ * Lifecycle not linked to that of the instance
+ * Snapshots are stored in s3
+ * Billed gb/month
+ * No cross AZ attachment
+
+ EBS Volume types
+    * GP2 (General purpose)
+        * 1GB - 16TB
+        * Block size (I/0 credit) - 16 kb
+        * IOPS
+        * Credit system 
+            * IO credits are required to perform IOPS to the EBs and instance
+            * Baseline 100 IOPS regardless of size
+            * 3 IOPS per GB
+            * A bucket is filled with 5.4 million IOPS credit
+            * It can burst upto 3000 IOPS by deplting the IOPS credit from the bucket
+                * sO it can burst with at 3000 IOPS for 30 minutes(3000*60*30) without refelling the credit
+            * If more IOPS is consumed than replinshed than bucket credit is deplted and vice versa
+        Beyond 1TB 
+            * 3000 IOPS as standard or baseline without any credit system
+            * 16,000 IOPS maximum
+    * GP3
+        * 3000 IOPS & 125 Mib/s standard
+        * 20% cost efficient than GP2
+        * 16000 IOPS and 1000 Mib/S
+        * 4x faster that GP2 (throughput)
+        * gp2 can be swapped with gp3
+
+    * Provisioned IOPS  
+        * Consistent low latency and jitter
+        * 64000 IOPS and 256,000 IOPS (Block Express) and 1000 MB/s throughput and 4000 Mb/s tp BE
+        * Per instance performance (Maximum performance between EBS service and single ec2 instance)
+            * Depends on the type of volume and instance        
+        * io1
+            * 50 IOPS /GB max
+            * Per instance 260,000 IOPS and 7500 Mb/s
+        * io2
+         * 500 IOPS /GB max
+            * Per instance max 160,000 and 4750 Mb/s
+        * io2 block express
+            * 1000 IOPS / Gb max
+            * Per instance 260,000 IOPS and 7500 Mb/s
+    * HDD based
+        * Types 
+            * st1
+                * Throughput optimized
+                * Frequent access
+                * Cheap than SSD
+                * 125GB -  16 TB 
+                * Sequential based access
+                * Credit system based on Mb/s instead of IOPS. 1 IOPS = 1mb/s
+                    * 40 MB/s / TB Base
+                    * Burst 250 Mb/s /tb
+                * Big data log procesing
+            * sc1
+                * Lowest cost HDD volume. Cold storage
+                * chaper than st1
+                * Infrequent access
+                * 125GB -  16 TB 
+                * Credit
+                    * 12 MB /TB base
+                    * 8 0MB/ TB burst
+                * max 250 Mb/s
+    * Instance Store Volumes
+        * Physically attached to the host of the ec2 intance. Any ec2 instance on the host can connect to it
+        * Highest storage performance in AWS 
+        * NEED TO ATACH AT THE TME OF LAUNCH OF THE INSTANCE
+        * Included in the instance price
+        * Ephemeral storage (Temp storage)
+        * If a instance moved between hosts then data would be lost as new ephemeral storage is attached
+        * D3 - 4.6 GB /s throughput
+        * I3 - 16 GB /s TP
+        ------------ Exam Power UP --------------------------
+        * Instacne store at launch volume
+        * local to ec2 host
+        * Lost on isntance restarts,move and resize or hardware failure
+        * TEMPORARY
+        -----------------------------------------------------
+
+    * Use cases
+        * EBS 
+            * Persistance
+            * resellience
+            * Lifecycle isolation from instance
+        * Instance store
+            * If app manages replication of data
+            * super high perforamnce
+EBS Snapshots
+    * Full snapshots are incremental
+    * snapshots are stored in s3
+    * New EBS volume - full performance
+    * Restored EBS volume - lazy performance
+        * Another perforamnce - Fast snapshot restore - Immediate resotre
+    * cost
+        * Snapshots are taken only for the data consumber not allocated
+        * So charge is only for the data consumed by the EBS GB/month
+    * Snapshots can be from one region to the other
+
+EBS Encryption
+    * without Encryption
+        * plain text at rest
+    * with Encryption
+        * Encrypted CMK from KMS is stored onto a seperate EBS volume
+        * The decrypted CMK is stored into the memory of underlying ec2 host
+        * When reading or wrting data to EBS from EC2 its encrypted or decrypted accordingly
+        * When a snapshot is created it is as well encrypted
+        * Any volume from the snapshot is also encrypted
+    
+--------- Exam Power UP ------------------
+ * AWS account can be set to encrypt by Default
+ * Otherwise choose CMK to encrypt
+ * Snapshots use the same DEK. also any future volumes from that snap uses that same DEK
+ * Can't decrypt and encrypted EBS
+ * Os is not aware of encryption. no performance loss
+ ----------------------------------------
+ Network Interface and DNS architecture
+    * PRimary ENI
+        * 
+        * SG are attached to the ENI
+        *  Mac address - attached to an ENI, can be used for liscensing 
+        * Primry private IP - IT DOES NOT CHANGE FOR THE LIFETIME OF THE INSTANCE
+        * 0 or more secondary private IP
+        * 0 or more 1 public IPv4 address - Will change after stop and start. Dynamic
+        * 1 elastic IP per private IPv4 address - The default public IP is removed and attach from the elastic IP
+        * 0 or more IPv6 addresses
+        * Source/Destination checks - This means that the instance must be the source or destination of any traffic it sends or receives.
+    * Secondary ENI
+
+-------------- Exam Power UP --------------
+    * Secondary ENI + MAC - Licensing
+    * Different security groups - multiple interfaces
+    * OS does not see the public IPv4
+    * Ipv4 public IP are dynamic
+    * Public DNS - private to the VPC and public to elsewhere
+-------------------------------------------
+
+AMI
+    * Region specific
+    * Process
+        * created snapshot
+-------------- Exam Power UP -------------------
+    * AMI - One region
+    * AMI cant be updated
+    * AMI can be copied to different regions
+    * Permissions - 
+        * Default by account
+        * can be made public or give permission to account seprately
+    * Not recommended to create AMI from running instance. Stop it and then create AMI
+--------------------------------------------------
+
+EC2 Instance Pricing model
+ * On demand
+    * Have an hourly charge
+    * No upfront payments
+    * spike or unprecidtale workloads
+ * Spot instances 
+    * Cheap prices (Upto 90% off the on demand ec2 machines)
+    * A spot instances are priced based on the ec2 spare capacity
+    * You can specify a max price
+    * Use cases 
+        * Apps that can tolerate failure
+        * apps that only make sense at low cost
+  * Reserved instances
+    * Upto 75 % off vs on - demand
+    * 1 or 3 years, ALL upfront, Partial upfront, no upfront
+    * Reserved in region or AZ with capacity reservation
+    * Scheduled reservations
+Instance checks
+    * 2 checks
+        * System rechability
+            * Loss os system Power
+            * Host hardware
+            * Host software
+        * instance reachability
+            * Os kernel
+            * corrupted file system
+
+Horizontal and Vertical Scaling
+    Vertical Scaling 
+        * Need downtime coz resizing can only be done during reboot
+        * Large instances can carry premium charges
+    Horizontal Scaling
+        * Sessions , sessions, seesions
+        * Requires off-host sessions
+        * No disruption while scaling
+--------- Exam power up--------------
+------------------------------------
+
+Ec2 Instance metadata
+    * Get public IPv4 or ther metadta about an instance
+    * 169.254.169.254/latest/meta-data
+    * or we can use ec2-metadata binary (downlaod from s3)

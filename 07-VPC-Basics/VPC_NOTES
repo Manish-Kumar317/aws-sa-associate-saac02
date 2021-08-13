@@ -1,0 +1,104 @@
+Default
+    * Some services can behave oddly if default VPC is not created
+    * Once deleted default VPC can be recreated
+VPC Sizing
+    * Size?
+    * other networks, cloud vendors and other things
+    * Reserve atleast 2+ VPC Cidr in one region
+    * AWS Ideal CIDR prefix
+        * micro - /24
+        * small - /21
+        * medium - /19
+        * large - /18
+        * XL - /16
+    * How many subnets
+        * recommendation
+            * 3 AZ and one spare. 4
+            * 3 teir(UI,backend,DB) and one spare. 4
+            * 4*4 = 16 subnets
+Custom VPC
+    * default or dedicated tenancy - Create VPC on shared hardware or dedicated hardware
+    * IPv4 private and public IPs 
+    * 1 primary private CIDR
+    * Min /28 max /16
+    * Optional single assigned IPv6 /56 CIDR Block
+    * DNS in VPC
+        * By Route 53
+        * DNS IP would be BASEIP + 2. So for 10.0.0.0 the DNS IP would be 10.0.0.2
+        * enableDNSHostnames - IF public IP is created create a public DNS for it
+        * enableDNSsupport - Enable DNS resolution within VPC
+    subnets
+        * 1 subnet cane only be in only in AZ. A AZ can have 0 or more subnets
+        * 5 reserved IPs within a subnet
+            * Network address or the starting address of the subnet (10.16.16.0)
+            * Network+1 for VPC router (10.16.16.1)
+            * Network+2 for DNS (10.16.16.2)
+            * Netwokr+3 reserved for future (10.16.16.3)
+            * Broadcast address (10.16.31.255)
+        * DHCP applied at VPC level - used for IP addr allocation
+        * Auto assign Public IPv4
+        * Auto assign IPv4
+
+VPC Router
+    * Network+1 address
+    * Routes traffic b/w subnets
+    * Controlled by route tables
+    * Every VPC has a main route table - subnet default
+    * A subnet can only be associated with one route table but a route table can be associated with multiple subnets
+    * A destination in route table can be an IP or a network range with prefix
+    * Higher the prefix , higher the priority when multiple routes are available.
+        *** But a local or default route takes priority
+Internet Gateway (IGW)
+    * Region resellient gateway attached to a VPC
+    * A VPC can have one or 0 IGW
+    * AN IGW can only be attached to VPC
+    * AWS manages Performance
+    * process
+        * Create IGW
+        * Attach it to VPC
+        * Create custom RT
+        * Associate RT
+        * Default routes(0.0.0.0./0,::/0) to IGW
+    * An IPv4 public address to EC2 instance is not configured on the instance but a record is maintained by IGW
+NACL
+    * Created by default by VPC each for all subnets
+    * Applicable only for subnets
+    * Instances within the subnet is not Applicable
+    * Every rule in nacl get its number and priority is given to the lowest number. * is default number for deny all and will be the last rule
+    * By default the all traffic will be allowed for both inbound and outbound
+    * Default DENYALL cannot be removed at all
+    * Response are sent on ephemeral ports
+
+------ Exam POWER UP -------------------
+* NACL are stateless. Rules needs to be added for both request and response
+* NACL only effects only if traffic crosses network subnet border
+* Can explicitly ALLOw and eplixitly DENYALL
+* No visibility for AWS resources
+* only be applicable to subnets
+* USE NETWORK ACL to explixitly DENY a specific IP (Bad IP)
+* One subnet = One NACL
+------------------------------------------
+
+Security Groups
+ * Applied to a Network Interface
+ * Default Implicit Deny but no explixit DENY
+
+ ------------ Exam Powerup -----------
+ * SG is stateful
+ * NO EXPLICIT DENY
+ * NACL mostly for NAT or to Explicitly DENY
+ ----------------------------
+
+ NAT
+    * IP Masquerading - Hiding CIDR blocks behind one IP
+    * Only outgoing internet access
+    * Uses Elastic IP (Static public IP)
+    * AZ resellient service only (HA in that AZ only)
+    * For region reseliency, WE have to create NAT in each AZ
+    * Upto 45 Gbps
+    * Charged hourly for base and charged hourly for data processing
+    * A NAT GW is to be created in public subnet and traffic from private network is forwarded to this NAT GW
+    * A NAt then forwards it to the IGW
+    * NAT does not have a SG it only has NACL
+    * NAT does not work with IPv6
+    * IGW will be used fo IPv6

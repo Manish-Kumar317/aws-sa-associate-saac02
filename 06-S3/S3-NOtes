@@ -1,0 +1,250 @@
+s3 Security
+    * It can be reached publicly but cannot be accessed until permissions are given
+    * Public by network and private by permissions
+    * Bucket Policies 
+        * A form of resource policy
+        * Like Identity policy but attached to the bucket itself
+        * Identity policy is attached to user to control what it can access
+        * Resource policy is attached to a resource to control who can access the resource
+        * IP is limited to only a users to that account
+        * RP can be restricted to any users in any account
+        * RP has an explicit component in the json as Principal
+        * Bucket Policies use cases 
+            * Allow /Deny access to users within same or partner accounts or to anonymous users in genreal
+            *
+        * IF a AWS Principal tries to access bucket both the identity policy and the resource poilcy is applied 
+            and follows the deny,allow,deny principle
+    * ACL 
+        * Obselete and not recommended by AWS
+        * Inflexible
+        * It can be applied on both Buckets and objects
+    * Block public access
+        * BLock all the access from public 
+        * It will override the resource policy and ACL
+
+----------- EXAM POWER UP --------------
+ * If we want to allow/deny permissions to serveral AWS resources than to use Identity coze
+    AWS services might not support resource policy
+ * If we want to allow/deny permmissions to a partcular resource then use Resource identity
+ * ACL never to use
+----------------------------------------
+
+s3 Static hosting
+    * Good to have error and Index documents
+    * Domain Name matters on the bucket name if linked to Route53
+    * Does not require object versioning
+    * Use cases 
+        * If a web app needs access to static data such as images we can offload the static data to s3
+        * Out of bound pages, when the compute server is under maintainance redirect the traffic to a static error page    
+    * costs 
+        * Storage per Gb
+        * Data retrival
+        * Requests
+Object Versioning
+    * Versioning can be enabled if its disabled but it cannot be disabled once enabled
+    * Versioning once enabled can be suspended and enabled again after suspension
+    * It helps you store the multiple versions of a object by adding an ID attribute
+    * When an object is deleted,
+        * It actually does not gets deleted but gets a delete marker for all the versions
+        * A delete marker can be removed to basically undo the delete action
+        * To actually delete an object , we can delete the actual version by ID atttribute
+MFA delete
+    * Enabled in Object Versioning
+    * MFA required to delete versions
+    * MFA to change versioning state
+s3 Performance
+    * Single Put upload
+        * Entire object is tried to upload together
+        * if the Put request fails, the entire object needs to send again
+    * Multipart upload
+        * minimum data size of 100MB 
+        * broken into max of 10000 parts 5MB - 5GB
+        * Parts failed can be sent again
+    * Transfer Acceleration
+        * Have edge location to transfer data from s3 to edge locations
+        * Edge locations are basically with low latency and high speed connection to the actual region data center
+        * http://s3-accelerate-speedtest.s3-accelerate.amazonaws.com/en/accelerate-speed-comparsion.html
+encryption
+    * Encryption approaches
+        * At rest 
+            * Encytping and decrypting by the same device.
+            * Usually only when one entity is involved
+            * The entity knows the keys for encryption/decryption
+        * In transit 
+            * When data is sent from one device to another it is encypted in transit
+            * Eg sending data to bank servers
+    * Concepts
+        * PlainTXT - Any form of data (text,image,app)
+        * Algo
+        * key
+        * CipherTXT
+    * symmetric
+        * Same key for encryption and decryption
+        * great for local encryption
+    * Asymmetric
+        * A pair of public and private keys
+        * Public key can be used to encypt the data and priv to decrypt it
+    * Signing
+        * Private key to sign a document and public key to validate that signature
+    * Steganography
+        * Like a invisible ink which would be visible u=only under special DataLink
+        * Hide a  text with plain text
+KMS
+    * Regional and Public service
+    * symmetric and Asymmetric
+    * KMS is FIPS 140-2 (l2) complaint
+    * Customer Master Key
+        * Logical key
+        * backed by actual Physical key
+        * used only for data upto 4kb
+    *Actions
+        * Create a CMK in KMS (as a runtime not stored into the disk)
+        * KMS encrypts the CMK and stores it persistenly onto the disk
+        * Encrypt request will happen as below
+            * KMS will decrypt the CMK (as a runtime not stored into the disk)
+            * Encrypt the data and send back
+        * decrypt
+            * KMS will decrypt the CMK (as a runtime not stored into the disk)
+            * decrypt the data back to original
+        * At any point
+            * The key does not leave KMS
+            * The requestee needs to have permission for create/encrypt/decrypt
+            * Key is not stored in plain text onto the disk
+    * Data Encryption key
+        * Created from CMK
+        * Limits more than 4kb
+        * Its not stored in any form on the disk
+        * Its created just before the encryption request is placed
+            * Creates a plain text and cipher text for that key
+            * uses plaintxt to encrypt the data and discards the plain txt key
+            * The cipher txt and the encrypted data is given to the requestee
+            * To decrpyt it we would need to give the cipher txt key and the ecrypted data
+            * KMS will decrypt the Cipher key using the correct CMK and then the acutal data using the DEK
+    * Concepts
+     * CMK never leaves the region
+     * AWS managed CMK and CMK
+     * Both support rotation
+     * AWS CMK rotates key every three years
+     * Aliases can be created for CMK and they are not global
+     * every CMK has its own key permissions
+s3 encryption
+    * Only objects are encrypted
+    * Client side (at rest)
+        * Evrything managed by client, keys and other things
+    * Server side (at rest)
+        * Managed by AWS
+        * SSE - C - customer managed keys
+            * It gets the plain text and the key 
+            * encrypts the data and stores the data into s3 storage
+            * dicards the key used for encryption
+            * Only key is given by client, enc/ dec is performed by s3
+        * SSE - s3 - s3 managed keys
+            * Plaintext by user, master key and encryption by s3
+            * Key roration and its management is taken care by s3
+            * a key is genreated for each object from the master key
+            * The plain text key is used to encrypt the data and the encypted key is stred in s3
+            * Con - An s3 admin will have access to decrypt the data
+        * SSE - KMS  - KMS
+            * The master key is provided by KMS
+            * DEK would be generated by CMK both as plain text and cipher text
+            * Plain text for encryption and cipher txt will e stored in s3 storage
+            * It overcomes the con in SSE - s3
+s3 storage class
+    s3 standard
+        * costs 
+            * GB/month
+            * $ per GB charge for data out
+            * Data in is free
+            * $ per 1000 Requests
+        * 99.9999999999% durabiltiy
+        * responses 200 code for sucess transfer
+        * objects are rpelicated at least 3az
+        * No discounts
+        * First byte millisecond latency
+        * Use cases
+            * Frequent access data
+            * SHould be a default storage
+    s3 standard infrequent access IA
+        * half of the cost to store the data
+        * Comporises
+            * retrieval fee
+            * charged for minimum duration charge of one month
+            * charged for 128 KB miminum size
+    s3 onezone IA
+        * similar for std. IA but stored only in one zone
+    s3 Glacier
+        * Cold storage data
+        * same 3AZ and same durability
+        * one fifth of s3 standard
+        * Pay for the retrieval process
+        * objects is temp stored in s3 IA and removed once retrieved
+        * objects from glacier can be permanently stored into any of the storage class
+        * first byte latency can be in minutes or hours
+        * data is chilled state
+        * 40 kb and 90 day minimum
+    s3 Glacier Deep archive
+        * Data in frozen state
+        * 40 kb and 180 day minimum
+        * Restore from 12 to 48 hours
+s3 Intelligent teiring
+    * Frequent access
+    * IA
+    * Glacier
+    * Glacier Deep archive
+s3 Lifecycle configure
+    * On a bucket or groups of objects
+    * Rules consists of actions
+    * Transition action - Switch or transition b/w different storage class
+    * Expiration actions - Delete object or version object
+    * Cannot set policies based of frequency of access
+    * Transitions happens only in downward fashion
+    * Points to remember
+        * Smaller objects can cost more
+        * To move from Standard to InfrequentAccess it need to e std. for 30 days
+        * A single rule to move to IA to glacier rewuires it to IA for 30 days
+s3 Replication
+    * Same region Replication
+    * cross region Replication
+    * Replication can between same account or different account
+    * For Replication
+        * SSL comunication is used
+        * IAM role is assumed by s3 in the trust policy and the permisions for replication s3
+    * Replication Options
+        * All objects or subset
+        * Storage class - default by source but can override
+        * Ownership - source aacount
+        * RTC - Guranteed 15 min SLA
+    * Points to consider
+        * Not retroactive - Already existing objects will not be synced
+        * Versioning needs to be on both source and dest
+        * Source bucket owns need permision on the other objects
+        * Any changes made by lifecycle event cannot be made rpelicated
+        * delete are not replicated
+    Use cases
+        * SRR - Log aggregation
+        * SRR - PROD to test 
+        * SRR - Reseleincy to have within same region for data restictions
+        * CRR - Reduce latency
+        * CRR - Global reseliency
+Pre-signed URL
+    * An authenticated IAM user can request for a P-s URl and get it fro AWS S3
+    * Any principal with that URL can perform task with s3 with permissions fo the IAM used to create the P-S url
+
+-----EXAM Power UP -------------
+* We can create a P-S URL for an object which we do not have access to. And the p-s url guy also not have access
+* URL has the same permissions as Idenitity that created it
+* Do not generate P-S url using an IAM role. always use IAM role
+------------------
+s3Select and Glacier s3Select
+    * Apply filters before retirving the data to reduce the size of the data and reduce cost
+
+s3Event Notifications
+    * Object created (Put copy )
+    * object removed (* , Delete object , Delete marked)
+    * Object Restore
+    * Object repllication
+s3 Access Logs
+
+
+
+

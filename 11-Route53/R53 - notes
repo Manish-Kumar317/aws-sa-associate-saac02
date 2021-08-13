@@ -1,0 +1,80 @@
+Hosted zones
+    * DNS DB(zone file) for a Domain
+    * Globally reselient
+Public Hosted Zones
+    * Zone file hosted by 4 name servers
+    * Resource records are created under within hosted zone
+    * The nameservers is in aws public zone and can be resolved by external traffic
+    * The VPC+2 IP can resolve this zone using r53 resolver
+Private Hosted Zone
+    * Public hosted zone but isn't public
+    * Only within VPC within different accounts
+    * Split view - same zone name for public and private name
+        * some records can be private and and some can be public
+CNAME vs Alias
+    * Problem
+        * Cname maps Name to Name
+        * CNAME cannot be created for APEX domain or naked domain (vcsgreenbox.com)
+    * https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html
+    * Use ALIAS records only with AWS services
+        * API Gateway cloudfront beanstalk ELB Global Accelrator and S3
+    * A CNAME record cannot be created for domain apex but alias reord can be created
+Simple routing
+    * When want to route reqests to ine webserver
+    * Does not support health checks
+R53 Health checks
+    * Are seperate from r53 records. Created outside of r53 records
+    * Globally located
+    * Can check any AWS endpoint or any public IP
+    * Health checkers every 30 seconds
+    * TCP, HTTP, HTTPS with string Matching (Body of the response)
+Failover routing
+    * A second record is created for the same record
+    * If the primary health check fails then it is routed to 
+Multivalue routing
+    * Mixture of simple nd Failover
+    * Many records with same name
+    * each record can have health checks
+    * When queried 8 healthy records are returned
+    * NOT A REPLACEMENT FOR LOAD BALANCING
+Weighted routing
+    * SIMPLE LOAD BALANCNG OR TESTING NEW SOFTWARE versions
+    * Each record can be returned based on weight vs total weight
+    * Adding weights on records to give priority based on weights
+    * A 0 record means it is never returned until all the other records are weighted 0
+    * A unhealthy weighted record can be skipped
+Latency based routing
+    * Better performance
+    * Region record is used
+    * One record with same name in each region
+Geolocation routing
+    * Geolocation records
+        * us state
+        * country
+        * continent
+        * default
+    * Does not return closest record it only retruns any which is applkicable
+    * Restrict content to specifc content
+    * Launage based pages
+    * NOT CLOSEST ONLY RELEVANT RECORDS
+    * Only return recors if the location is RELEVANT
+GEO-PROXIMITY RECORDS
+    * Provide record within the closest location (distance)
+    * A plus or minus bias can be added to the record to increase the coverage area
+    * for Eg     
+        * Austrailia having large bias (+) can cover saudi if uk region is on low bias (refer images)
+
+Route53 interporability
+    * r53 can do domain registrar and domain hosting
+    * Domain registration and hosting
+        * accepts fees 
+        * creaes 4 name servers
+        * create a zone file on the above ns 
+        * create a record for ns in top level domain
+    * domain reg Only
+        * domain reg is by r53
+        * domain ns hosting is on external like go daddy
+    * hosting Only
+        * opp of domsin reg
+        * ns by aws
+        * domain reg by external

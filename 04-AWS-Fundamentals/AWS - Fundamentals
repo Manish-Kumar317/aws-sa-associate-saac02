@@ -1,0 +1,61 @@
+VPC
+    * Within one account and one region
+    * Private and isolated
+    * Default and custom VPC
+    * Default VPC one per regoin. CIDR - 172.31.0.0/16. /20 subnet in each region
+    * One subnet for each AZ.
+EC2
+    * Private by Default
+    * Within a subnet
+    * AZ reselient - AZ fails, instance fails
+    * Lifecycle
+        * Running - cost charged for CPU,memory, storage and network
+        * Stopped - cost charged only for storage
+        * Terminated - :)
+    * AMI
+        * It contains the boot volume to load the OS
+        * Block Device mapping
+        * Permissions - Public Access, Owner only, specific AWS accounts
+        * instance setting and network setting are stored in AMI
+S3
+    * dnsPublic Global Service
+    * FLAT STRUCTURE. all the object are stored at the root of the bucket
+    * Bucket created in S3 is region specific. A bucket has to be created in a region
+    * A BUCKET NAME AS TO BE UNIQUE AMONG ALL REGIONS AND ALL AWS ACCOUNTS GLOBALLY
+    * Object
+        * Key : data(image,rpm or anything else)(value can be upto 5TB)
+    
+
+
+EXAM POWER_UP
+    * BUCKET NAME AS TO BE UNIQUE AMONG ALL REGIONS AND ALL AWS ACCOUNTS GLOBALLY
+    * s3 BUKCET soft limit is 100 and hard limit 1000
+    * Size of the object can be till 5TB
+
+HA Vs Fault Tolerance Vs Dr 
+    * HA - Minimise any outages
+    * FT - Operate though faults
+    * DR - Used when HA or FT don't work
+
+DNS
+    * Trying to resolve www.amazon.in
+    * Client make request to DNS resolver server to find a .in zone in root server
+    * DNS resolver tries to find the root zone fom the root server maintained by IANA.
+    * The root zone will give the nameservers authorative for .in zone
+    * Then the DNS resolver would try to search for www.amazon.in in the authorative name servers
+    * The name servers would give further authorative to name server for amazon.in
+    * NOw DNS resolver will try to connect to the amazon.in name server
+    * The amazon.in name server would give the IP address www.amazon.in back to the DNS resolver
+
+Route53
+    * Can be public or private
+    * Zone files are created and managed by 4 AWS hosted name servers , so known as Hosted Zones
+    * DNS record types
+        * A name - IPv4
+        * AAA name - IPv6
+        * CNAME - Host
+        * MX
+            * To identify a mail server
+            * mx 10 mail
+            * where 10 is priority(1 being the highest) and mail is the hosted
+        * TXT - To prove the autheticitiy of the domain

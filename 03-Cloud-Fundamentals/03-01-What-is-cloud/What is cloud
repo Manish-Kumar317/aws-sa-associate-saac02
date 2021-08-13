@@ -1,0 +1,87 @@
+Five principles
+ * On demand self service - Create reosurces or services using any manual intervention from the cloud providor
+ * Broad Network Access - Should be able to access the service over the network using standard protocols
+ * Resource Pooling - Serving multiple tenants from the same hardware. End user not being aware of exact location of Resource
+ * Elasticity - Ability to scale out or scale in automatically based on the load
+ * Measured Service - Pay as you use
+
+ Public cloud - Which is available to public as AWS, GCP and Azure
+ Private cloud - Cloud which is dedicated to a specific client. 
+                 Legacy on-premesis is NOT PRIVATE cloud as its not true to the above principles
+ Multi cloud - Use of one or more cloud
+ Hybrid cloud - Use of PRivate and public cloud from the same vendor as AWS and AWS outposts
+
+ IAAS - Manage O/S EC2
+ PAAS - Manage runtime lambda
+ SAAS - Manage software elasticsearch
+
+ OSI Model
+    * Physical layer - cables,optic fibre or Wi-Fi
+    * DataLink layer 
+        * Contains the source and destination MAC address (Unique way of understanding the NIC)
+        * Carrier checks is used for data collision. It check whether any data is also sent by receving end
+        * Device to Device over local network
+    * Network layer - 
+        * Cross network addressing
+        * Source and Destination IP address
+        * ARP - For a given DEst IP it will automatically get its MAC address by broadcasting
+        * Device to Device comm over internet
+        * packet delivery is not reliable
+    * Transport layer
+        * TCP - Connection based protocol. SLow but reliable. Packed will be in sequence
+        * UDP - Connectionless protocol. Fast but unreliable
+        * Diff b/w TCP and UDP - https://www.lifesize.com/en/blog/tcp-vs-udp/
+
+Network Address Transalation (NAT)
+    * STATIC NAT (AWS IGW)
+        * Each private device gets its own fixed public IP by the NAT device
+        * Traffic from the private device intended for the internet get its source IP modified to NAT Public IP
+        * Traffice sent back to this public IP to the private network device get its dest modified to private ip by NAT
+    * Dynamics NAT
+        * THe private device gets a random temp piblic IP available from the pool by the NAT device
+        * When traffic is requested for the internet a public IP is attached for the duartion of the request
+        * Might run into unavailability of Public IP during concurrent traffic by private devices
+    * PAT (AWS NATGW)
+        * All the private devices get mapped to a single NAT public IP
+        * When a request from a private Ip is sent to internet
+            * NAT device / Router will attach the public IP and a new source port
+            * When the reponse is recieved by router it will look in its NAT table with the source port 
+                and route it to the original private IP
+IPv4 Address Space - https://www.iana.org/
+    * Class A 
+        * 0.0.0.0 - 127.255.255.255
+        * Private Range - 10.0.0.0 - 10.255.255.255
+        * Very big org
+    * Class b
+        * 128.0.0.0 - 191.255.255.255
+        * Private Range - 172.16.0.0 - 172.31.255.255
+    * Class C
+        * 192.0.0.0 - 255.255.255.255
+        * 192.168.0.0 - 193.168.255.255 (Private range)
+        * small business
+SSL / TLS (Scenario only for Server identification)
+    * Server Prerequesites
+        * Create a public / private key pair
+        * Create a CSR with encrypted public key
+        * Ask CA to sign the CSR
+        * The CA signs the CSR by encrypting with its private key and provide public certificate
+        * The CA's public key is then made available to the OS or by the browser as trusted CA or root CA
+    * TLS negotiation Steps are performed after a TCP handshake
+    * Cipher Suites ((Asymmetric))
+        * The client sends metadata such as TLS version,Session Id,Cipher suite
+        * If the cipher suites is supported by the server, only then server will repsond
+            * TLS version, SessionId , Cipher suite
+            * Public certificate which contains the public key
+    * Authentication (Asymmetric)
+        * The client verifies for valid CA from its truststore or root CA
+        * The client validates the certificate for its date and DNS
+        * It then decrypts the Public certificate using the CA's public key and gets the server's public key
+        * It sends a random message to server encrypted with the server's public key
+        * Server decrypts the encrypted random message by its own private key and confirms it to the client
+    * Key exchange (Asym to symmetric)
+        * The client send pre-master key to the server by encrypting it using server's public key
+        * The server decrypts the pre-master key using its private key
+        * Now both the client and server have same master secret which is valid for the lifetime of the Connection
+        * Now using this master secret they can generate session keys to encrypt and decrypt data
+        * both side confirm the handshake and now the connection b/w server and client is encrypted
+        * At this stage the encryption becomes asym to symmetric and reduce computtional overhead required for asym

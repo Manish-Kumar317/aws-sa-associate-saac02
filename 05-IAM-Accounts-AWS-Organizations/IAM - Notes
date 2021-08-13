@@ -1,0 +1,81 @@
+{
+    "version":
+    "Statement": [
+        {
+            "Sid": ----> statement Id
+            "Effect" ----> allow or deny
+            "Action" ----> on which aws service
+            "Resource" ----> on which resource of that aws services
+        }
+    ]
+}
+
+Rules for overlapping
+    * Explicit deny
+    * Explicit allow unless explict deny
+    * Default implicit Deny except the root user
+
+Type of policies
+    * Inline Policy - same individual policy is attached to individual users seperately 
+    * Managed Policy - same policy commonly attached to individual users
+
+IAM user
+    * A single user or entity acting as a single principal
+
+---exam power up-------
+    * 5000 iam users per account
+    * an iam user can only be part of 10 groups
+
+IAM groups
+    * Cannot login as a groups
+    * Only to organise users
+    * An IAM user can be part of multiple IAM groups
+    * Cannot have nested groups
+    * No built in groups
+    * All 5k users can be added to a group
+    * Groups cannot be REFERENCED on the reosurce policy
+
+IAM roles
+    * 
+    * IAM role is best suited to be used for unknown principals for a temp purpose
+    * It does not represent a user, account but the level of Permissions
+    * A IAM role can only be assumed
+    * USer is for long term but role is for short term
+    * Role get a temporary token from AWS STS (Secure Token Service) sts:AssumeRole
+    * Types of IAM Policy
+        * Trust policy - Either users or reousrces in the same account or diff account
+        * Permission policy
+    * Use cases
+        * An AWS service rather than giving access tokens
+        * An emergency role during a break glass scenario
+        * SSO or >5K users
+        * Web identity federation
+AWS Organizations
+    * One management account handling zero or multiple accounts
+    * Can create organizational units which can hold multiple AWS accounts
+    * Consolidate Billing
+    * Service Control Policies
+        * Management account is unaffected by SCP 
+        * SCP can restrict permissions for account root user** by restricting what an account can do 
+          but otherwise you cannot restrict the permsiions of root account user
+        * They do not grant permissions they just imit the permmissions
+        * 
+    * Works great with AWS SSO
+CloudWatch
+    * Regional service
+    * Log are sent to stream
+    * Log group are log streams
+    * Metrics and renetenction permissions are done at log group
+
+CloudTrail
+    * Logs API calls account event as CloudTrail Event
+    * regional service and All region
+    * Global service events are logged to NVG
+    * Logs managment event and data events(only if enabled)
+----EXam Power Up--------
+    * Cloud trail is enables by Default. with retention of 90 days no s3
+    * Trails are how you configure s3 and CLW Logs
+    * Managment events only by default
+    * IAM , STS and Cloud fronts are global services and are logged to NVG
+    * Not realtime
+

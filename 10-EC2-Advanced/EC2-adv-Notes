@@ -1,0 +1,101 @@
+Bootstrapping
+    * Allows EC2 - Build automation
+    * User data - http:/169.254.169.254/latest/user-data
+    * User-data is executed by the instance OS
+    * ONLy on launch. EC2 does not intepret the data
+    * Logs are present in /var/log as cloud-init and cloud-init-output
+    *Risks
+        * Data is Opaque to ec2
+        * Not secure for passwords
+        * User data limit is 16kb. Anything more than that download that script 
+    * Boot time -to- service time
+        * AMI -(minutes)- Instance - post launch time--> ready
+
+AWS::CloudFormation::Init
+    * cfn-init helper script installed on ec2 os
+    * Simple configuration mgmt system like ansible check for desired state
+    * Creation policy and signals
+        * Since we are not aware that the resources are created sucessfully using cfn:init or not we can use above heading
+        * Process
+            * A timeout is set in creation policy 
+                * Until the cfn:init is not completed withing this time limit it wont let the stack to be completed
+            * If the cfn:init is complete then the stack is set to complete
+            * If it fails then the stack is set to fails
+            * if it timeous then also the stack fails
+EC2 Instance roles and profile
+    * AN instance profile is attached to the instance
+    * Used to access other AWS services from EC2 instances
+    * Credentials are inside meta data
+    * IAM/security-Credentials/role-name
+    * Auto rotation
+    * Should be used instead of adding keys
+    * use 169.254.169.254/latest/meta-data/iam/security-credentials to get the iam role attached to an instance
+    * Credential Precedence - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence
+
+SSM Parameter store
+    * Public service
+    * for config and secrets
+    * String, StringList & SecureString
+    * Licsense code , database StringList
+    * Hirarchy and versioning
+    * Plaintxt and CipherTXT
+    * Public parameters - LAtest aMI per region
+
+System and Applciation logging from EC2
+    * Cloud watch Metrics
+    * CLoud watch logs
+    * To capture data inside the instance we need to use cloud watch agent along with confg
+        * Agent config
+        * EC2 Instance profile to send data to CW
+Ec2 placement groups
+    * Cluster
+        * Highest level of performance
+        * Same Rack or sometimes the same host
+        * Lowest latency
+        * 10 Gbps single stream
+        * if the rack or host fails the CPG fails
+        * A CPG can only in one AZ
+        * Can span VPC peers but impact performance
+        * Reuires a supported instance type
+        * Use the same type of instance (Not mandatory)
+        * Launc at the same time ("")
+    * Spread
+        * Span along multiple AZ. Sepreate AZand seperate rack. 7 instances per AZ
+        * reseliency
+        * default kind of placement
+        * serveral file system mirror
+    * Partition
+       * Partitions are placed on individual rack
+       * Multiple instances can be placed into the Partition
+       * 7 partitions per AZ 
+       * cannot be for dedicated hosts
+EC2 dedicated hosts
+    * Entire host is allocated
+    * No instance charges. Charged for the host
+    * On demand and reserved available
+    * Dedicated hosts are desinged for a particualr instance family
+    * Before Nitro virtualization
+        * A dedicated host can only run one type of instance like large xl or 2xl cannot mix match
+    * After nitro, we can mix match between sizes
+    * Limits
+        * AMI Limits - RHEL, SUSE and windows
+        * Amazon RDS 
+        * Placement groups
+    * Hosts can be shared with other organizations
+Enhanced N/W and EBS optimised
+    * SR-IOV-NIC is virtualization aware(single root I/O virtualization)
+        * Non enhanced n/W  
+            * There is only one host NIC and all the NIC of virtual instances NIC need to communicate with this 
+            * NIC not aware of virtualization
+        * Enhanced n/W
+            * NIC is aware of virtualization
+            * Host nic create a virtual NIC for each of the virtual instances NIC
+        * Higher I/O and low CPU
+        * More bandwidth
+        * Higher packets per second
+        * Consistent low latency
+        * enabled by default
+    * EBS optimised
+        * Dedicated capacity for EBS
+        * by default
+        * Required

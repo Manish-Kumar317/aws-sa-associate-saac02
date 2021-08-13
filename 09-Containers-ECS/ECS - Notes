@@ -1,0 +1,36 @@
+Problems of virtualization
+    * need an hypervisor and each vm needs it own os
+
+ECS 
+    * Managed container based compute service
+    * Runs on docker engine
+    * Container Definition
+        * Registry
+        * Ports
+    * Task Definition
+        * Task role (secuirty)
+        * CPU, Memory
+    * Service Definition
+        * Scale tasks. HA
+        * Define a load balancer in front of service definition
+
+ECS Cluster Types
+    * Components
+        * Scheduling and orchestration
+        * ClusterManager
+        * Placement Engine
+    * Clsuter types
+        * EC2 model
+            * Uses VPC
+            * EC2 instances , Multi AZ ,SG 
+            * Need to manage the underlying ec2 instances
+        * Fargate
+            * Serverless
+            * Shared infra
+            * Into the VPC
+            * Its given an Elatic netowrk interface
+            * No need to manage hosts
+EC2 vs ECS vs Fargate
+    * Containers use ECS
+    * Large worklaod  - price consicius - Ec2
+    * Large workload  - overhead consicius - Fargate
