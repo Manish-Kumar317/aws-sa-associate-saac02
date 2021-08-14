@@ -59,3 +59,16 @@ Route53
             * mx 10 mail
             * where 10 is priority(1 being the highest) and mail is the hosted
         * TXT - To prove the autheticitiy of the domain
+Amazon RDS security
+    * SSL/TLS (in transit) is available, can be mandotory
+    * EBS volume encryption
+    * Handled by Host and EBS. DB engine is unware of it
+    * storage, logs and replicas are enc
+    * MSSQL and Oracle support TDE (Transparent data encryption)
+        * Encryption by db engine
+        * RDS Oracle supports CloudHSM
+    * IAM user Notification
+        * Local users on the db can be created with AWS auth token
+        * A Policy can be attached to IAM user or role or to instance role
+        * The principal gets a token to access the RDS DB valid for 15 minutes
+        * Its only used for authentication(login) and not authorizaton (permissions in DB)

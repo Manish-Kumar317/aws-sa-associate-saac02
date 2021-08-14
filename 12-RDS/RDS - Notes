@@ -1,0 +1,91 @@
+DB on EC2
+    * Why we should run on ec2
+        * Access to the instance OS
+        * Advanced DB tuning option from DBROOT
+        * Often the above are demanded by vendors
+        * DB or DB version not provided by AWS
+        * Very specfic version of DB or/and os version
+        * replication not supported by AWS
+    * Why we shouldn't
+        * admin overhead
+        * backup and DR management
+        * EC2 is single AZ
+        * Featues AWS DB products are amazing
+        * Replication
+        * Performance
+
+RDS
+    * DB as a Service (DBaaS)
+    * Managed DB instacnes
+    * Multiple engines
+    * Amazon aurora
+RDS DB instance
+    * Database CNAME
+    * Different types similar to ec2 instances
+    * different SSD EBS similar to ec2
+RDS MultiAZ
+    * Primary and standby
+    * No free tier
+    * both have their own storage
+    * primary to secondary snychornous replication
+    * RDS can be access by CNAME whic normally points to primary only
+    * Process
+        * Write data on primary 
+        * primary writes data on disk
+        * sync from priamry to secondary with almost no lag 
+        * secondary writes data to disk
+    * If primary fails cname is changed to secondary withing 120 seconds Usually
+
+------ Exam Power UP-------------
+    * No free tier
+    * standby cannot be accessed directly unless Failover. Availabilty not performance
+    * High availabilty not fault tolerant
+    * Backups taken from standby (No performance issue)
+    * AZ outage, primary failover, instance type change
+    * Synchornous - MultiAZ
+--------------------------------------
+
+RDS backup and restore
+    * RTO and RPO
+        * RPO - Recovery point objective
+            * time between last objective and the incident
+            * amount of maximum data loss
+            * influences solution and cost. Lower value more cost
+        * RTO       
+            * time between DR event to full Recovery
+            * low values cost more
+    * both backups and Snapshots are taken in s3 and invisible to the customer
+    * Both backups and snapshots are incremental
+    * automated backups
+        * defined backup window
+        * the above defines RPO
+        * automated snapshots
+        * every five minutes db transaction logs are stored in s3
+        * deleted automatically based on retention period
+    * manual snapshots
+        * snapshots are not deleted
+        * regualr snapshots less RPO 
+
+----- Exam powerup-------------
+    * Create new RDS instance - new address restore
+    * snapshot to restore in a specifc point in time RPO would be affected
+    * automatic backups have transaction logs can restore before 5 minutes from the distaster . Better RPO
+    * Restores aren't fast - RTO
+-------------------------------
+RDS REAd repplicas
+    * read only replicas of the instances    
+    * ASYNCHORNOUS. a little lag
+    * coupled with Multi-AZ refer learning aids
+    * cross region (enc in transit)
+    * Performance
+        * 5 X per RDS DB instacnes. ONLY %
+        * couple along with standby
+        * Read replicas can have read replicas but will be laggy
+        * Global performance improvements
+    * availiility
+        * improve RPO. Near 0 RPO
+        * RTO is still Problem. Convert RR to RW and reduce the RTO
+        * Gloabl availabiltiy
+    * corrupted data would be replicated
+
+
