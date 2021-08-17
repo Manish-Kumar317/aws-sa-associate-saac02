@@ -1,0 +1,12 @@
+EFS architecture    
+    * EFS is based on NFSv4
+    * Monuted in linux
+    * shared by instances
+    * seperate life cycle as of the instance
+    * private service to the VPC only and peering and direct connection
+    * Linux only
+    * General perfomance and MAx I/O 
+    * Burst and Provisened troughput modes
+        * Burst - grow as the size increases
+        * Provisioned - consistent
+    * Standard and IA access

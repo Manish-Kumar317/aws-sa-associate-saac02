@@ -1,0 +1,27 @@
+LB
+------ Exam Power UP -------------
+    * Clinets connect to a listener on the LB
+    * Listener connection - client to listener
+    * Backend connection - listener to backend target
+    * Used for HA, FT and scaling
+----------------------------------
+
+ALB 
+    * Layer 7  - undersands HTTP/S
+    * Scalable and available
+    * Internet facnig or internal
+    * Hourly and LCU(Load Capacity unit) per hour
+    * Cross zone load balancing
+
+---- Exam Power UP --------------
+    * Targets(lambda, ec2) are under target groups
+    * Rules are host based or path based
+    * ALB can use SNI for multiple SSL certs 
+    * Recommedned vs CLB
+-------------------
+
+Launch configuration and Launch Templates
+    * Allows you to define the ec2 configuration in advance 
+    * AMI, key pair, storage
+    * immutable
+    * LT Recommedned over LC. LT is newer

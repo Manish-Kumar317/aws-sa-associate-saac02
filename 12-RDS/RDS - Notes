@@ -10,7 +10,7 @@ DB on EC2
         * admin overhead
         * backup and DR management
         * EC2 is single AZ
-        * Featues AWS DB products are amazing
+        * Featues on AWS DB products are amazing
         * Replication
         * Performance
 
@@ -48,10 +48,12 @@ RDS MultiAZ
 RDS backup and restore
     * RTO and RPO
         * RPO - Recovery point objective
-            * time between last objective and the incident
+            * RPO refers to the maximum acceptable amount of data loss an application can undergo before causing measurable harm to the business.
+            * time between last backup and the incident
             * amount of maximum data loss
             * influences solution and cost. Lower value more cost
-        * RTO       
+        * RTO 
+            * RTO states how much downtime an application experiences before there is a measurable business loss     
             * time between DR event to full Recovery
             * low values cost more
     * both backups and Snapshots are taken in s3 and invisible to the customer
@@ -64,7 +66,8 @@ RDS backup and restore
         * deleted automatically based on retention period
     * manual snapshots
         * snapshots are not deleted
-        * regualr snapshots less RPO 
+        * regualr snapshots less RPO
+        * manual snapshots are not delete automatically
 
 ----- Exam powerup-------------
     * Create new RDS instance - new address restore
@@ -88,4 +91,76 @@ RDS REAd repplicas
         * Gloabl availabiltiy
     * corrupted data would be replicated
 
+Amazon RDS security
+    * SSL/TLS (in transit) is available, can be mandotory
+    * EBS volume encryption
+    * Handled by Host and EBS. DB engine is unware of it
+    * storage, logs and replicas are enc
+    * MSSQL and Oracle support TDE (Transparent data encryption)
+        * Encryption by db engine
+        * RDS Oracle supports CloudHSM
+    * IAM user Notification
+        * Local users on the db can be created with AWS auth token
+        * A Policy can be attached to IAM user or role or to instance role
+        * The principal gets a token to access the RDS DB valid for 15 minutes
+        * Its only used for authentication(login) and not authorizaton (permissions in DB)
+
+Amazon aurora architecture
+    * VERY diff from RDS
+    * Uses a Cluster
+    * Primary + 0 or more replicas (upto 15 replicas)
+    * No local storage shared cluster volume (6 replicas acroos diff AZ)
+        * High OPS , low latency
+        * No minimum size like EFS . Billed on consumption
+        * High water mark billing model
+    * Only primary can wrtie others can be read  
+    * No free tier
+    * 100% DB size backup
+    * backup as similar to RDS
+    * restore creates a new cluster
+    * Backtrack canbe used to allow in place rewinds to a previous point of time
+    * Fast clone make a new db much fast . It references the original storage and only diff aare stored
+aurora serverless
+    * Scalable ACU - Aurora Capacity Units
+        * Allocated from a pool of ACUs 
+        * ACU can be allocated 
+        * ACU is stateless and shared among customers
+        * No local storage
+        * Can be allocate rapidly when required
+        * ACU can be dynamically increased or decreased based on load
+    * Ability to define min and max
+    * Cluster adjusts based on load
+    * can go to 0 and be paused
+    * consumption billing per second
+    * Managing connections
+        * Shared proxy fleet (refer learning aids)
+        * These manage the connections
+        * The underlying compute is not aware of it make the scale out or scale on more fluid
+    * Use cases
+        * Infrequently used appliations
+        * New applications unsure of the load and resources
+        * Variable wokrlaods
+Aurora GLobal Database
+    * Global level replication
+    * 5 secondary REGIONS
+    * replication is between 1s from primary to secondary
+    * Use cases
+        * cross region DR
+        * Global read scaling
+Aurora Multi-Master
+    * All instances are by default in R/W
+    * Application connects directly to the ACU
+    * No proxy fleet
+    * Fault tolerant
+
+Database Migration Service
+    * Managed service
+    * migrate DB from one to another using a replication instance inbetween
+    * Runs using a replication instance
+    * Source and destination end points
+    * One end point must be in AWS
+    * Can be migrated in two ways
+        * Full data - source db needs to be offline for no delta afterwards
+        * Full data + CDC (change data capture) - Copies the entire db while copying stores the CDC and once copied the full db , copies the CDC as well
+            * No source db need to be offline
 
