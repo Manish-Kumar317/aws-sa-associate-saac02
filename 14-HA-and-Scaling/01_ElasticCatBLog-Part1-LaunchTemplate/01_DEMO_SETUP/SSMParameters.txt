@@ -7,5 +7,5 @@ NAME TYPE VALUE
 
 /A4L/Wordpress/DBName STRING a4lwordpress
 /A4L/Wordpress/DBUser STRING a4lwordpress
-/A4L/Wordpress/DBPassword SECURESTRING XXXXXX
-/A4L/Wordpress/DBRootPassword SECURESTRING XXXXXX
+/A4L/Wordpress/DBPassword SECURESTRING a4$wordPre$$
+/A4L/Wordpress/DBRootPassword SECURESTRING a4$wordPre$$

@@ -25,3 +25,48 @@ Launch configuration and Launch Templates
     * AMI, key pair, storage
     * immutable
     * LT Recommedned over LC. LT is newer
+
+Auto scaling
+    * Uses Launch templates and configuration
+    * Has a Minimum Desired and MAximum size
+    * Provision or terminate instacnes  
+    * Scaling based on metrics
+    * Attempts to keep the instances even
+    * Scaling policies
+        * Manual
+        * Scheduled
+        * Dynamic
+            * Simple - "CPU above 50% + 1 ". Based on metric
+            * Stepped - Simple + more control. Scale 1 if 50 + or 2 if 70+
+            * Target Tracking - Desired Aggregrate. Constant resources if the load increases or decreases
+
+    * Cooldown periods
+        - Time to wait after scaling before performing another scaling
+    * Ability to integrate with ALB
+    * Use ALB for abstraction
+    * ASG define WHEN and WHERE, LT defines WHAT to launch
+
+NLB
+    * Layer 4
+    * Low latency
+    * million of requests per second
+    * static IP address
+    * elastic IP 
+    * SSL passthrough
+SSL offload and session stickiness
+    * Bridging 
+        * Listener is configured for HTTPS
+        * Connection is terminated on the ELB and needs a certificate for the domain
+        * AWS mght be aware of the certificates
+        * Coonections to Ec2 instances again as encrypted
+        * Decrypt and then send again encrypt
+    * passthrough
+        * Just passes
+        * No decryption
+        * Instance needs to have the SSL certificate
+    * offload
+        * Terminated on the loadbalancer
+    * Session stickiness
+        * 1s to 7 days
+        * can create uneven load
+        * Recommedned to keep this logic outside of the aws
