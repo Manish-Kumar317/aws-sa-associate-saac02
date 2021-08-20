@@ -1,0 +1,31 @@
+Architecute
+    * Monolith
+    * Tier Based
+    * Queue Based
+        * Requests are sent to Queue
+        * If the queue is long instances can be scaled accordingly or vice versra
+        * Based on the queue lenghth the instances can scale in or scale out
+    * Miicroservice
+        * Consumer 
+        * producer
+        * both
+    * Event driven
+        * Event producer - when an event occurs
+        * Event Consumer
+        * Both
+        * Event router
+            * Events are sent to event router  and then it sends to Event Bus
+            * Event Bus
+            * which consumer it needs to deliver
+LAmbda
+    * Function as a service
+    * Event driven invocation
+    * LAmbda Function
+    * Use a runtime like python, java and node.js
+    * Only billed for the duration the function runs
+    * Key component of serverless architecture
+    * A function should be written in python
+    * Recources allocation
+        * Memory we will allocate and the CPU will be allocated accrodingly by AWS
+    * Execution role (IAM role but attached to the Lambda function)
+    * 
