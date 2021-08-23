@@ -31,7 +31,7 @@ s3 Security
 
 s3 Static hosting
     * Good to have error and Index documents
-    * Domain Name matters on the bucket name if linked to Route53
+    * Domain Name matters on the bucket name if linked to Route53 (ADD MORE DETAILS FOR EXACT DOMAIN EXAMPLE)
     * Does not require object versioning
     * Use cases 
         * If a web app needs access to static data such as images we can offload the static data to s3

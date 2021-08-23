@@ -20,7 +20,7 @@ CNAME vs Alias
         * API Gateway cloudfront beanstalk ELB Global Accelrator and S3
     * A CNAME record cannot be created for domain apex but alias reord can be created
 Simple routing
-    * When want to route reqests to ine webserver
+    * When want to route reqests to one webserver
     * Does not support health checks
 R53 Health checks
     * Are seperate from r53 records. Created outside of r53 records
@@ -54,7 +54,7 @@ Geolocation routing
         * continent
         * default
     * Does not return closest record it only retruns any which is applkicable
-    * Restrict content to specifc content
+    * Restrict content to specifc region
     * Launage based pages
     * NOT CLOSEST ONLY RELEVANT RECORDS
     * Only return recors if the location is RELEVANT

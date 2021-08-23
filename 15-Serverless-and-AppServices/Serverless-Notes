@@ -28,4 +28,88 @@ LAmbda
     * Recources allocation
         * Memory we will allocate and the CPU will be allocated accrodingly by AWS
     * Execution role (IAM role but attached to the Lambda function)
-    * 
+    * Stricly STATELESS
+        * Unless
+            * you can push data to other services like db or s3
+        * beacuse
+            * underlying host storage is temp
+    * Can access internet 
+    * 15 minute execution limit
+********** Exam Power up ------------
+    * Limit to 15 minutes
+    * New runtime environment for each execution
+    * Use excution role to give permission for other services
+    * RUNTIME IS NOT PERSISTANT . USE OTHER PRODUCTS
+    * Free -tier elgible. 
+----------------------------------
+
+Cloud watch events and Events Bridge
+    * CWE
+        * log events within AWS
+    * EventBridge
+        * Superset of CWE
+        * CWE 2.0
+    * If x happens or at and y time(s) do z
+    * Both use a default bus for the account
+    * CWE there is only one bus and not exposed on the UI 
+    * EB can create more bridges
+    * Rules match incoming events or sechedule
+    * Process
+        * When an state of a service changes(ec2) it creates and event and sedns to default event bus
+        * Event bridge monitors this default event bus and rules are used to pattern match or time match(cron)
+        * Rules are present in the event bridge either on a schedule or a pattern. This rule can trigger a event to a target like svc like lambda
+
+API Gatweway
+    * Mananged API Endpoint service
+    * Create , Publish , Monitor and secure APIs as a service
+    * Billed based on Number of API Calls , Data trasnfer and additional performance features
+    * Both for legacy and modern
+
+Serverless Architecture
+    * Isn't one single thing
+    * You manage few if any server - low overhead
+    * Beyond microservices - fucntions
+    * Stateless and ephemeral - duration billing
+    * FaaS
+    * Event driven
+    * If not used should be zero cost
+    * Managed serviced wherever possible
+    * Example
+Simple Notification service (SNS)
+    * Public service
+    * Pub sub message
+    * Co-ordinates for sending and delivery of messages
+    * Messages are <= 256KB payloads
+    * A publisher sends message to a topic
+    * A topic can be subscribed
+    * A producer generate messages and a subscriber recieves the message
+    * A filter can be applied at subscriber level to recieve required messages
+    * Capabilites
+        * Delivery status
+        * Delivery retries
+        * HA and scalable region ressilient service
+        * Server side encryption
+
+Step fucntions
+    * To overcome desgin limitations of lambda
+        * Lambda is FaaS
+        * Max 15 minutes for lambda
+        * Run environments are stateless
+    * We can create state machines
+    * States are things which can occurs
+        * Start - STATE - end
+    * Maximum 1 year
+    * Standard Workflow
+        * Maximum 1 year
+    * Express Workflow
+        * 5 minutes
+        * High transcational volumes like IOT 
+    * IAM role for permissions
+    * States   
+        * Succeed and fail
+        * Wait - certian period of time or specifc time. Holds the processing
+        * Choice - Take a different path based on bheaviour
+        * Parallel - perform multiple stuff based on the Choice
+        * Map - A list of order. For each order it performs a action
+        * Task - A single unit of work performed by a service (lamda, batch, ECs, SNS, SQS)
+
