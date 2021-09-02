@@ -3,7 +3,7 @@ Hosted zones
     * Globally reselient
 Public Hosted Zones
     * Zone file hosted by 4 name servers
-    * Resource records are created under within hosted zone
+    * Resource records are created  within hosted zone
     * The nameservers is in aws public zone and can be resolved by external traffic
     * The VPC+2 IP can resolve this zone using r53 resolver
 Private Hosted Zone

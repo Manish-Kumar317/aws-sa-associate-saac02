@@ -1,0 +1,57 @@
+* CloudFront is a global object cache
+* Content is cached local to close to customers
+* Lower latency and higher throughput
+* Load on server is decreased
+* It can hadnle static and dynamic content
+* Intergrates with ACM and HTTPS
+* Query Parameters
+    * Imporant to define wheter the cache or not
+    * Also selectively cache
+
+CF Terms
+    * Origin
+        * Original/source location fo the content
+    * Distribution
+        * The config unit of CF
+    * Edge locations
+        * where the content is cached
+        * 3rd party data centres ...Could be
+    * Regional Edge cache
+        * Another layer of cache
+        * Cache between edge and source
+
+ACM
+    * HTTP - simple and Insecure
+    * Only supported to services or features which support ACM like LB and not EC2
+
+OAI 
+    * Origin Access Identity
+    * Secure CF and s3
+    * Allow public access only from CF
+CloudFront Lambda@edge
+    * Allows to run lambda functions at edge locations
+    * limitations
+        * nODE JS AND python only
+        * No direct access to aws resources
+        * performance 128MB
+    * Where it can run (refer diagram))
+        * Viewer request
+        * Orifin request
+        * Origin response
+        * Viewer response
+    * Use cases
+        * A/B TESTING
+        * Migration between s3 origins
+        * Different Objects based on device
+        * Content by country
+Global Accelrator
+    * Optimize flow of data from AWS infra to users
+    * Uses anycast IP (TWo IP's)
+    * Edge location are backed by AWS Infra with guranteed performance and low latency
+    * Diff between CF and GA 
+        * CF moves the content by cahcing closer to the customers
+        * GA moves the network closer to the customers
+        * GA - Connection enter at edge using ANYCAST IP
+        * GA - Transist over AWS network to 1+ locations in AWS
+        * CF caches Https content
+        * GA works at network level TCP/UDP

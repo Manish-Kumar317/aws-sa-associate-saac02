@@ -70,3 +70,19 @@ SSL offload and session stickiness
         * 1s to 7 days
         * can create uneven load
         * Recommedned to keep this logic outside of the aws
+
+Gateway LB
+    * Help you run and scale 3rd party applications
+    * Things like firewall , intrustion detection and prevention
+    * Inbound and outbound
+    * GLWB endpoints .....traffic enters and leaves via these components
+    * Load balances packets to multiple backends
+    * Since the security software is not orginally meant to recieve the packetes (Source IP/Dest IP)
+    * GWLB uses GENEVE protocol
+    * Process
+        * A GWLBE can be maaped to r53 record
+        * Once a request hits the r53 it forwards it to GWLBE
+        * GWLBE forwards it to GWLB (works on layer 3 ,4 similar to NLB)
+        * Packets are encapsulated via Geneve protocol and sent to the security devices
+        * The secuirty devices scan it and send it back to LB 
+        * Refer diagram
