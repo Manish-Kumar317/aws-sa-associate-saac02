@@ -1,0 +1,50 @@
+VPC Flow Logs
+    *  VPC FLow logs is a feature allowing the monitoring of traffic flow to and from interfaces within a VPC
+    * PC Flow logs can be added at a VPC, Subnet or Interface level.
+    * Flow Logs DON'T monitor packet contents ... that requires a packet sniffer.
+    * Flow Logs can be stored on S3 or CloudWatch Logs
+
+Egress-Only Internet Gateway
+    * Why do we need
+        * IPv4 add are public and private
+        * NAT allows private IPs to access public networks
+        * NAT is limited to IPv4
+        * IGW (IPv6) allows all IN and OUT network. To overcome this we use E-O IGW
+    * AZ resellient
+    * Arch same as IGW
+VPC Endpoints
+    * Gateway 
+        * Provide private access to s3 and DynamoDB 
+        * Provide private access to AWS public SERVICES
+        * Created per servcie per region in one or more subnets in a VPC
+        * PREFIX LIST IS ADDED TO THE ROUTE TABLE FOR THE ASSOCIATED SUBNETS
+        * HA across all AZs in aregion by default. Region resellient
+        * Endpoint Policy is used to control what it can access
+            * Like restrict it to particular s3 bucket and not the entire s3 service
+        * REGIONAL can access cross region services
+        * Prevent Leaky bukcets
+            * Like only allow via the gateway endpoint and rest would be implicitly denied
+        * It cannot be accessed by outside of the VPC it is associated with
+    * Interface Endpoints
+        *  Provide private access to AWS Public Services EXCEPT S3 and Dynamo DB
+        * Added to specific subnets - an ENI - not HA. No HA by default
+        * For HA - 
+            * one endpoint , one subnet per AZ
+        * Network access by Secuity groups. GE do not use that
+        * Endpoint Policies
+        * ONLY TCP and IPv4
+        * Uses PrivateLink
+        * USES DNS FOR ENDPOINT
+            * Reginonal DNS - Can be resolved all over the VPC
+            * Zonal DNS - Can be resolved within the same zone
+        * PrivateDNS
+            * Associates Private r53 zone with the private IP of service endpoint
+            * Override the default service
+
+AWS VPC Peering - 
+    * Direct encrypted link between TWO VPC
+    * same/cross-region same/cross-account
+    * public dns hostname to resolve the private IPs 
+    * Same region can SG's can reference peer SGs
+    * NOT supports transitive peering (VPCA<->VPCB<->VPCC. Does not mean VPC A can connect to VPC C).
+    * VPC CIDR cannot be overlapped
