@@ -1,0 +1,53 @@
+Dynamo Databases
+    * NoSql
+    * Public Database as a Service
+    * Key,Value
+    * No self managed or infra reqiured to manage
+    * Provisioned performance or onDemand
+    * HA, across AZs and optionally Global
+    * More like Table as a service
+    * Items inside Table
+    * Item max 400kb
+    * Types of keys
+        * Simple (Partition) or Composite(Parition & Sort) Primary keys
+    * Capacity Units
+        * 1 WCU - 1 KB per second
+        * 1 RCU - 4 KB per second
+    * backups
+        * On - Demand backup
+        * restores
+            * Same or Cross-region
+            * 
+        * PITR
+            * Continous record upto 35 days
+            * Can be resotred with 1 millisecond delay
+    * Considerations 
+        * NoSQL ... preference DynamoDB
+        * Relational Data NOT DynamoDB
+        * Key/Value preference DynamoDB
+        * DynamoDB cannot be accessed via SQL only via CLI, SDK or Console
+        * Billed on RCU,WCU, Storage and features
+DynamoDB Performance, Consistency, Operations
+    * R/W
+        * On-Demamnd
+            * unkonwn, unpredictiable , low admin
+            * price per million R or W unites (5 times more than provisioned)
+        * provisoned
+            * RCU and WCU set ona per table basis
+            * Every operation consumes at leat 1 RCU/WCU
+            * 1 WCU - 1 KB per second
+            * 1 RCU - 4 KB per second
+        * Every table has a RCU and WCU burst pool (300 seconds)
+    * Query
+        * Query based on a partition key an /or sort key
+    * Scan 
+        * Moves through the entire table
+        * Coonsumes based on the item scanned
+    * Consistnecy
+        * Clustered with one leader storage node
+        * Writes are always directed to leader node
+        * Eventual Consistency Read
+            * Half the cost of strongly consistent
+        * Strong Consistency
+        * WCU Calculation
+            * 

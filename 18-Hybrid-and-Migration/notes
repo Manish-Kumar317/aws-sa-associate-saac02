@@ -1,2 +1,155 @@
 Border Gateway Protocol (BGP) 101
+    * Lets router exchange network information 
     * Autonomous ssytems (AS) - Routers controlled by one entity 
+    * Operates over tcp/179
+    * BGP needs to be manually created between two AS
+    * BGP is a path vector protocol it excahnges the best path to a destination between peers. This path is called ASPAT
+AWS Site to Site VPN
+    * A logical connection between VPc and on-premise, encrupted running over the public internet
+    * Full Ha - If you design and implement it correctly
+    * Quick to provision - less than hour
+    * Virtual Private Gateway (VGW)
+    * Customer Gateway (CGW)
+    * VPN Connection between the VGW and CGW
+    * Process refer diagram
+        * VGW creates two endpoint to make it Ha
+        * Tunnel from each endpoint is opened to op prem Customer Gateway
+        * To make the on prem HA,  
+            * Add additional CGW and create one more VPN connection
+        * Static vs Dynamic VPN
+            * Static - Uses static routes and statically configured VPN connection
+            * Static - Missing Load balancing and mutli connection failover
+            * Dynamic - Uses BGP protocol. Provided Multiple VPN
+            * Dynamic - Supports Route propogation
+                            * If the VGW gets aware of the any network it will add to the routes automatically
+            * Limitations
+                * 1.25 Gbps Exam power UP
+                * Latency - inconsistent , public internet
+                * Cost - AWS hourly cost, GB out cost, data cap (on premises)
+                * Speed of setup - hours or less coz all software configuration
+                * Can be backup for Direct Connect
+AWS Direct Connect
+    * A 1Gbps(1000-Base-LX) or 10 Gbps(!0gBase-LR) port 
+    * Port are located in DX location
+    * Only port would be given and rest is handled by customer
+    * Multiple Virtual Interfaces (VIFS) over one DX
+    * Private VIF(VPC) and Public VIF(Public zone services)
+    * Takes longer very longer than VPN
+    * Dx Port provisioning is quick...the cross connect takes longer
+    * May be first provision VPN and then DX
+    * Faster 40 Gbps with Agregation
+    * Low consistent Latency
+    * NO encryption
+
+AWS Transit Gateway
+    * Network Transit Hub to connect VPC to on premisies networks
+    * Reduces network complexity
+    * HA ans scalable
+    * Attachaments to other networks
+    * VPC, Site-to-Site VPN & Direct Connect Gateway
+    * TRANSITIVE
+        * Create site to site VPN from TGW to CGW
+        * Then all the VPC connected to TGW can connect to CGW and also among themselves
+        * TGW can be peered with other TGW
+
+Storage Gateway
+    * Hybrid Storage Virtual Appliance
+    * Extenstion of file and volume Storage into AWS
+    * Volume Storage backups into AWS
+    * Tape backups into AWS
+    * Migration of existing infra to AWS
+    * Modes 
+        * Tape Gateway (VTL)
+            * Virtual Tapes - s3 and glacier
+            * 
+        * File Modes (SMB and NFS)
+            * File storage backed by s3
+            * SGW provied SMB ad NFS to the client and then the files are stored as s3 objects
+            * Provides active directory
+        * Volume Modes
+            *  Gateway cached and stored (iSCCI)
+            * Uses and backed by s3 and EBS snapshots
+            * The storage is local but the backups are stored in s3 as ebs snapshots
+            * stored
+                * Primararly used for DR and snapshots 
+                * The data is on local and only backup is taken by AWS
+            * cached
+                * The primaryy data is stored in AWS
+                * Only cached data is stored into AWS
+Snowball / Edge / Snowmobile
+    * Move large amount of data in and out of AWS
+    * Physical suitcase or truck
+    * Get the storage device from AWS and do stuff and return it
+    * Snowball
+        * Log a job and get the device
+        * Data encryption uses KMS
+        * 1gbps 0r 10Gbps
+        * 50 TB or 80 TB
+        * Uses cases - 10TP - 10PB
+        * multiple devices to multiple premises
+        * only storage
+    * Snowball Edge
+        * Both storage and compute
+        * Speed 10-100 Gbps
+        * Types
+            * Storage optimised - ec2 capability
+            * compute optimised
+            * compute with GPU optimised
+    * Snowmobile
+        * Portable DC within shipping container on a truck
+        * over 10 PB - 100 PB per Snowmobile
+        * Not economical for multi-site (unless huge)
+AWS directory structure
+    * Directory
+        * Store objects (Users,Goups,Computers,Servers,File Shares) with a structure (domain/tree)
+        *  Multiple tress can be grouped into a forest
+        * Used for Windows
+    * AWS Directory service
+        * AWS managed implementation
+        * Runs within a VPC
+        * To implement HA ... deploy into multple AZ
+        * Some AWS need a Directory e.g Amazon Workspace(like citrix)
+        * Can be isolated
+        * Can be integrated with on prem
+        * Modes
+            * Simple AD Modes
+                * Default
+                * Open source Samba4
+                * Create users in SimpleAd and integreate in Workspaces
+                * Upto 500 users(small) or 5000(Large)
+                * Not to integrate with On premises
+            * AWS Managed Microsoft AD 
+                *Microsoft AD 
+                * Primaray directory is on prem
+                * Secondary can be integreated on prem
+            * AD Connector
+                * Primary on prem
+                * Acts just as proxy
+AWS Data Sync
+    * Data Transfer service To and From AWS
+    * Migrations, Archice, Cost effective , DR/BC 
+    * Desgined for hughe scalable
+    * Keeps metadata (permissions/timestamps)
+    * Data validation
+    * !0 Gbps
+    * Pay as per used
+    * Task - A job which defines what is being synced and how quickly. From and To
+    * Agent - on prem Agent
+    * Location - From and To
+
+Fsx for windows file server
+    * Fully manged NATIVE windows file Servers
+    * Integration with Directory Service and Self managed
+    * Single or multi AZ
+    * VSS - User Driven restores
+    * Windows permissions
+    * DFS - scale out 
+Fsx for lustre
+    * High performance - Mschine learning, Modelling
+    * Posix file ssytems
+    * sub millisecond Latency
+    * Scracth - Short term no replication
+    * Persistant - self healing 
+    * Data can be stored in s3
+    * Sagemaker
+            

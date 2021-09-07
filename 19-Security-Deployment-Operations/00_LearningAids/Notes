@@ -1,0 +1,45 @@
+AWS secret Manager
+    * Share functionality with Parameter store
+    *  passwords , API keys 
+    * Console, CLI , API or SDK
+    * Automatic rotation using lambda (N/A in Parameter store)
+    * Integrate with AWS products (RDS)
+
+AWS shield and App Firewall (WAF)
+    Shield
+        * DDos attack - Filtering
+        * Network Layer or Layer 4 or 5
+        * Types 
+            * Standard
+                * Free with Route 53 and CloudFront
+            * Advanced
+                * $3000 p/m 
+                * Ec2,ELB,CloudFront,Global Accelrator R53
+                * DDos Response team and Finanical Insurance
+    * WAF
+        * Layer 7 - Filtering
+        * SQL Injection,Cross-Site Scripting , Geo Bloacks, RAte Awarness
+        * WEBACL integrated with ALB and other attacks
+    * CLoud HSM
+        * KMS is shared with multiple tenants and AWS has still access to the underlying hardware or software
+        * Cloud HSM is Single Tenant
+        * AWS provisoned..... fully customer managed
+        * FIPS 140-3
+        * Access by PKCS,JCE, CryptoNG protocols
+        * KMS can use CloudHSM
+        * Deployed into AWS Managed Cloud HSM VPC
+        * Can be configured as Cluster
+        * Use cases
+            * No Native AWs Integration
+            * Client side encryption using CLoud HSM using like CLI
+            * Enable Trasnparent Data encryption for Orcale Databases
+            * Protect private keys for self CA
+    * AWS Config
+        * Record config changes over time 
+        * Can be used for Auditing. It cannot restrict only audit changes
+        * Regional Service...support cross region and cross account
+        * Can be used for SNS notifications
+    * Amazon Macie
+        * Data Security and DAta Privacy
+        * Discover , Monitor and protect data stored in s3 buckets
+        * Data identifier and custome data identifier ML/Patterns
