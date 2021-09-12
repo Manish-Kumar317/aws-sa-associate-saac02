@@ -16,7 +16,7 @@ DB on EC2
 
 RDS
     * DB as a Service (DBaaS)
-    * Managed DB instacnes
+    * Managed DB instances
     * Multiple engines
     * Amazon aurora
 RDS DB instance
@@ -67,13 +67,13 @@ RDS backup and restore
     * manual snapshots
         * snapshots are not deleted
         * regualr snapshots less RPO
-        * manual snapshots are not delete automatically
+        * manual snapshots are not deleted automatically
 
 ----- Exam powerup-------------
     * Create new RDS instance - new address restore
     * snapshot to restore in a specifc point in time RPO would be affected
     * automatic backups have transaction logs can restore before 5 minutes from the distaster . Better RPO
-    * Restores aren't fast - RTO
+    * Restores aren't fast - might affect RTO
 -------------------------------
 RDS REAd repplicas
     * read only replicas of the instances    
