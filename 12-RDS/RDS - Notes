@@ -92,6 +92,8 @@ RDS REAd repplicas
     * corrupted data would be replicated
 
 Amazon RDS security
+    * You can only enable encryption for an Amazon RDS DB i nstance when you create i t, not after the DB i nstance i s
+      created
     * SSL/TLS (in transit) is available, can be mandotory
     * EBS volume encryption
     * Handled by Host and EBS. DB engine is unware of it
@@ -103,15 +105,15 @@ Amazon RDS security
         * Local users on the db can be created with AWS auth token
         * A Policy can be attached to IAM user or role or to instance role
         * The principal gets a token to access the RDS DB valid for 15 minutes
-        * Its only used for authentication(login) and not authorizaton (permissions in DB)
+        * Its only used for authentication(login) and not authorizaton (permissions in DB, taken care by local db user)
 
 Amazon aurora architecture
     * VERY diff from RDS
     * Uses a Cluster
     * Primary + 0 or more replicas (upto 15 replicas)
-    * No local storage shared cluster volume (6 replicas acroos diff AZ)
+    * No local storage shared cluster volume (6 replicas across diff AZ)
         * High OPS , low latency
-        * No minimum size like EFS . Billed on consumption
+        * No minimum size similar to EFS . Billed on consumption
         * High water mark billing model
     * Only primary can wrtie others can be read  
     * No free tier
