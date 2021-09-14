@@ -45,6 +45,7 @@ Auto scaling
     * Ability to integrate with ALB
     * Use ALB for abstraction
     * ASG define WHEN and WHERE, LT defines WHAT to launch
+    * Can use ALB health checks instead of ec2 health checks
 
 NLB
     * Layer 4

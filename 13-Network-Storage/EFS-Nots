@@ -1,5 +1,6 @@
 EFS architecture    
     * EFS is based on NFSv4
+    * Access points
     * Monuted in linux
     * shared by instances
     * seperate life cycle as of the instance
@@ -10,3 +11,10 @@ EFS architecture
         * Burst - grow as the size increases
         * Provisioned - consistent
     * Standard and IA access
+    * No native replication
+Standard storage	$0.30 per GB
+Standard-Infrequent Access storage	$0.025 per GB
+One Zone storage	$0.160 per GB
+One Zone-Infrequent Access storage	$0.0133 per GB
+Infrequent Access requests	$0.010 per GB transferred
+Provisioned Throughput	$6.00 per MB/s    
