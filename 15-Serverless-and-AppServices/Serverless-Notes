@@ -35,6 +35,9 @@ LAmbda
             * underlying host storage is temp
     * Can access internet 
     * 15 minute execution limit
+    * Concurrency limit - 1000 concurrent execution per Region
+        * reserved Concurrency
+        * Provisioned Concurrency
 ********** Exam Power up ------------
     * Limit to 15 minutes
     * New runtime environment for each execution
@@ -91,6 +94,7 @@ Simple Notification service (SNS)
         * Server side encryption
 
 Step fucntions
+    * JSON-based Amazon States Language.
     * To overcome desgin limitations of lambda
         * Lambda is FaaS
         * Max 15 minutes for lambda
@@ -113,3 +117,57 @@ Step fucntions
         * Map - A list of order. For each order it performs a action
         * Task - A single unit of work performed by a service (lamda, batch, ECs, SNS, SQS)
 
+Simple Queue Service
+    * Types
+        * Standard 
+            * best effort. no order gurantee
+            * at least once. may be twice or more
+            * like four lane highway
+        * FIFO
+            * Send and recieved data in order
+            * exactly once
+            * like single lane highway
+            * 3000 messages per second batching and 300 messages without batching
+        * Maximum 256KB
+        * Recieved messages are hidden (Visibility timeout)
+            * Client needs to delete the message or else after VT the messages will reappear to processed by a different client
+        * Dead letter Queue - can be used for problematic messages
+        * Billed on requests
+        * Less efficent for most frequesnt uses
+        * Polling
+            * Short - constantly polls the queue. consumes a request even if the queue size is zero
+            * Long (waitTimeSeconds)- Polls and wait for the mssages to arrive. Recommended
+            * Encrytpition at rest and transit
+        * Delay Queues - 15 minutes
+
+Kinesis (like Kafka)
+    * Streaming sservice
+    * Lots of data and lots of devices
+    * Data is available for 24 hours. Can be increased to 7 days
+    * Multiple producers and multiple consumers
+    * Kinesis Data streams
+    * Kinesis analytics
+    * Kinesis video streams    
+    * Kinesis firehose
+        * Put data into something like s3
+SQS vs Kineis
+    * SQS   
+        * 1production group and 1 consumption group
+        * Decouppling and async commn
+        * No persistance of messages
+    * Kinesis
+        * Huge scale ingestion
+        * Multiple consumers
+        * Monitoring,analystic,ingestion
+
+Amazon Cognito
+    * Authentication,authorization and user managment for web/mobile apps
+    * User pools
+        * Sign in and get a JWT 
+        * WEb UI for sigin 
+        * MFA
+        * Phone and email verification
+        * Also by other identity providors
+        * CANNOT PROVIDE ACCESS TO THE AWS SERVICES
+    * Identity pools
+        * Allow temp access to aws services by giving temp aws credentials
