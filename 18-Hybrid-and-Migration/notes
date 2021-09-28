@@ -8,7 +8,7 @@ AWS Site to Site VPN
     * A logical connection between VPc and on-premise, encrupted running over the public internet
     * Full Ha - If you design and implement it correctly
     * Quick to provision - less than hour
-    * Virtual Private Gateway (VGW)
+    * Virtual Private Gateway (VGW) - Two endpoints in diff AZ
     * Customer Gateway (CGW)
     * VPN Connection between the VGW and CGW
     * Process refer diagram
@@ -39,7 +39,7 @@ AWS Direct Connect
     * May be first provision VPN and then DX
     * Faster 40 Gbps with Agregation
     * Low consistent Latency
-    * NO encryption
+    * NO Encryption
 
 AWS Transit Gateway
     * Network Transit Hub to connect VPC to on premisies networks
@@ -142,14 +142,16 @@ Fsx for windows file server
     * Integration with Directory Service and Self managed
     * Single or multi AZ
     * VSS - User Driven restores
+    * SMB - File system
     * Windows permissions
     * DFS - scale out 
 Fsx for lustre
     * High performance - Mschine learning, Modelling
     * Posix file ssytems
     * sub millisecond Latency
-    * Scracth - Short term no replication
-    * Persistant - self healing 
-    * Data can be stored in s3
+    * Scracth - Short term no replication. Pure performance
+    * Persistant - self healing .
+    * Data is loaded from s3 and write it bact
+    * No auto sync to s3
     * Sagemaker
             
