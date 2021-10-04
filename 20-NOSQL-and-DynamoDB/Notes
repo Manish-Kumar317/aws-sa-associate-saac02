@@ -10,6 +10,7 @@ Dynamo Databases
     * Item max 400kb
     * Types of keys
         * Simple (Partition) or Composite(Parition & Sort) Primary keys
+    For Provisoned
     * Capacity Units
         * 1 WCU - 1 KB per second
         * 1 RCU - 4 KB per second
@@ -20,12 +21,12 @@ Dynamo Databases
             * 
         * PITR
             * Continous record upto 35 days
-            * Can be resotred with 1 millisecond delay
+            * Can be resotred with 1 millisecond delay. Need to enabled explicitly
     * Considerations 
         * NoSQL ... preference DynamoDB
         * Relational Data NOT DynamoDB
         * Key/Value preference DynamoDB
-        * DynamoDB cannot be accessed via SQL only via CLI, SDK or Console
+        * DynamoDB CANNOT be accessed via SQL only via CLI, SDK or Console
         * Billed on RCU,WCU, Storage and features
 DynamoDB Performance, Consistency, Operations
     * R/W
@@ -39,15 +40,85 @@ DynamoDB Performance, Consistency, Operations
             * 1 RCU - 4 KB per second
         * Every table has a RCU and WCU burst pool (300 seconds)
     * Query
-        * Query based on a partition key an /or sort key
+        * Query based on one partition key an /or one or range of sort key(s)
+        * Pull as much as data in one operation or query
     * Scan 
+        * Can scan any attribute
         * Moves through the entire table
-        * Coonsumes based on the item scanned
+        * Coonsumes based on the item scanned not based on the returned data
+        * Can be more expesnive than Query
     * Consistnecy
         * Clustered with one leader storage node
         * Writes are always directed to leader node
+        * Types of consistency
         * Eventual Consistency Read
             * Half the cost of strongly consistent
+            * Data can be read from any node and it can also read stale data
         * Strong Consistency
+            * Data is always read from replciated node and consistency can be gauranteed
         * WCU Calculation
-            * 
+            *  x= round(ITEM_SIZE/1kb)
+            *   x* No of items per second
+        * RCU
+            * x= round(ITEM_SIZE/4kb)
+            * x* no. of items per second
+
+Dynamo DB Streams and triggers
+    * Records every change in the table
+    * Views
+        * KEYS_ONLY
+        * NEW_IMAGe
+        * OLD_IMAGE
+        * NEW_AND_OLD_IMAGES
+    * Stream + triggers ususally with lambda
+    * Aggregation , Messageging and Notifications
+
+DynamoDB Indeces
+    * Alterntive views for a table
+    * Different PK and SK keys
+    * Types 
+        * Local
+            * Only alternative SK
+            * Attributes - ALL, Keys_only
+            * Sparse data
+            * Need to create along with the base table
+            * Strong consistency
+        * GLobal
+            * Can  be created at any time
+            * Different partition and SK
+            * OWN RCU and WCU
+            * Sparse data
+            * Can be created anytime
+            * Eventually consistent
+GlobalTables
+    * Multi-master cross region replication
+    * Tables are created in multiple regions
+    * Last writer wins
+    * Sub-second replication
+
+DynamoDB Accelrator (DAX)
+
+Amazon Athena
+    * Run Ad-hoc queires on Athena
+    * Schema on READ. Original data can be in original form(Unstructured)
+    * CLoudtrail and VPC FLowlogs
+
+Amazon ELasticCache
+    * In memory Database
+    * REdis or memcached
+    * READ HEAVY and low latency. cache data
+    * Store session data
+    * Reuqires application code changes
+
+Amazon RedShift
+    * Petabyte Scale
+    * OLAP (Cloumn based)
+    * Analysis of aggrgsted data
+    * Directly query s3 using Redhsift spectrum
+    * Diretcly query other dbs using federatedquery
+    * Server based. ONE AZ by default
+    * Enhanched VPC routing
+    * backups in s3
+    * Resllience and Recovery
+        * Restore from backups 
+

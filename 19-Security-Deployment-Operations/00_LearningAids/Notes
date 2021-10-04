@@ -43,3 +43,6 @@ AWS shield and App Firewall (WAF)
         * Data Security and DAta Privacy
         * Discover , Monitor and protect data stored in s3 buckets
         * Data identifier and custome data identifier ML/Patterns
+
+AWS inspector
+    * For ec2 targets only
