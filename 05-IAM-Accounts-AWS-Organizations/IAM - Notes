@@ -16,8 +16,12 @@ Rules for overlapping
     * Default implicit Deny except the root user
 
 Type of policies
+* Identity based policy - within AWS account
     * Inline Policy - same individual policy is attached to individual users seperately 
-    * Managed Policy - same policy commonly attached to individual users
+    * Managed Policy - same policy commonly attached to multiple users
+* Reasource based policy - outside of AWS accout
+    * to resources
+    
 
 IAM user
     * A single user or entity acting as a single principal
@@ -43,8 +47,8 @@ IAM roles
     * USer is for long term but role is for short term
     * Role get a temporary token from AWS STS (Secure Token Service) sts:AssumeRole
     * Types of IAM Policy
-        * Trust policy - Either users or reousrces in the same account or diff account
-        * Permission policy
+        * Trust policy - Which users or reousrces in the same account or diff account can have access
+        * Permission policy - to what resources
     * Use cases
         * An AWS service rather than giving access tokens
         * An emergency role during a break glass scenario
@@ -59,19 +63,30 @@ AWS Organizations
         * SCP can restrict permissions for account root user** by restricting what an account can do 
           but otherwise you cannot restrict the permsiions of root account user
         * They do not grant permissions they just imit the permmissions
-        * 
     * Works great with AWS SSO
 CloudWatch
     * Regional service
+    * EC2- CloudWatch does not collect memory utilization and disk space usage metrics. Need agent
+    * CLW agent can also be installed on prem
+    * Cloudwatch Alarms can be sent to SNS or Autoscaling
     * Log are sent to stream
     * Log group are log streams
     * Metrics and renetenction permissions are done at log group
+Cloudwatch Logs
+    * Monitor logs from EC2 instances in real-time
+    * Monitor CloudTrail logged events
+    * By default, logs are kept indefinitely and never expire
+    * Archive log data
+    * Log Route 53 DNS queries
 
 CloudTrail
+    * Trail - Changes in AWS resouces
+    * Event - activity on the region/account
     * Logs API calls account event as CloudTrail Event
     * regional service and All region
     * Global service events are logged to NVG
     * Logs managment event and data events(only if enabled)
+    * CloudTrail publishes log files about every five minutes.this can be sent to CW
 ----EXam Power Up--------
     * Cloud trail is enables by Default. with retention of 90 days no s3
     * Trails are how you configure s3 and CLW Logs

@@ -8,15 +8,15 @@ Arch
         * Burst or steady state load
         * Monolithic
 Instance types
-    * General Purpose
+    * General Purpose (t-type and m-type)
         * Default - Eqaul ratio resources
-    * Compute optimised
+    * Compute optimised (c type)
         * ML,Media processing,HPC,gaming
-    * Memory optimised
+    * Memory optimised (r type)
         * Process large in memory
-    * Accelerated Computing
+    * Accelerated Computing (f type, g - type, p - type)
         * Hardware GPU, FPGA
-    * Storage optimised 
+    * Storage optimised (d - type, h - type, i- type)
         * Random I/O. Elastic search , database, analytics
     * https://learn.cantrill.io/courses/730712/lectures/14550451
     2021-08-03-11-17-43.png
@@ -26,6 +26,15 @@ Instance types
     || |_____________ option such as network storage or processor     
     ||________________ generation
     |__________________ Type of instance
+
+State
+    * start/ running
+    * stopeed
+    * hibernated
+        * Writes in memory state to a file in root EBS volume ans shuts down
+        * AMI and root EBS volume must be encrypted
+        * Charged for EBS volumes and Elastic IP address
+    * terminate
 
 Storage Refresher
     * Since Ec2 instances move between different underlying hosts EBS network store is used
@@ -63,6 +72,7 @@ EBS (Elastic Block Storage)
  * No cross AZ attachment
 
  EBS Volume types
+    * Provisioned IOPS can be attached to multiple instances using multi attach
     * GP2 (General purpose)
         * 1GB - 16TB
         * Block size (I/0 credit) - 16 kb
@@ -101,7 +111,7 @@ EBS (Elastic Block Storage)
             * Per instance 260,000 IOPS and 7500 Mb/s
     * HDD based
         * Types 
-            * st1
+            * Throughput Optimised st1
                 * Throughput optimized
                 * Frequent access
                 * Cheap than SSD
@@ -111,7 +121,7 @@ EBS (Elastic Block Storage)
                     * 40 MB/s / TB Base
                     * Burst 250 Mb/s /tb
                 * Big data log procesing
-            * sc1
+            * Cold HDD sc1
                 * Lowest cost HDD volume. Cold storage
                 * chaper than st1
                 * Infrequent access
@@ -184,6 +194,9 @@ EBS Encryption
         * 0 or more IPv6 addresses
         * Source/Destination checks - This means that the instance must be the source or destination of any traffic it sends or receives.
     * Secondary ENI
+        * Same as primary ENI
+        * But can be removed and attached to different instance
+        * can be used for liscendsing
 
 -------------- Exam Power UP --------------
     * Secondary ENI + MAC - Licensing
@@ -194,6 +207,13 @@ EBS Encryption
 -------------------------------------------
 
 AMI
+        A template for the root volume for the instance (OS, application server, and applications)
+        Launch permissions that control which AWS accounts can use the AMI to launch instances
+        A block device mapping that specifies the volumes to attach to the instance when it’s launched
+        AWS Training Amazon EC2 2
+
+        Backed by Amazon EBS – root device for an instance launched from the AMI is an Amazon EBS volume. AMIs backed by Amazon EBS snapshots can use EBS encryption.
+        Backed by Instance Store – root device for an instance launched from the AMI is an instance store volume created from a template stored in S3.
     * Region specific
     * Process
         * created snapshot

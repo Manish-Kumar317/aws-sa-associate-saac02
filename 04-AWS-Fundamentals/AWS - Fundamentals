@@ -16,7 +16,7 @@ EC2
         * It contains the boot volume to load the OS
         * Block Device mapping
         * Permissions - Public Access, Owner only, specific AWS accounts
-        * instance setting and network setting are stored in AMI
+    
 S3
     * dnsPublic Global Service
     * FLAT STRUCTURE. all the object are stored at the root of the bucket

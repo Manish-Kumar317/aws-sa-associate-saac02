@@ -46,6 +46,11 @@ Auto scaling
     * Use ALB for abstraction
     * ASG define WHEN and WHERE, LT defines WHAT to launch
     * Can use ALB health checks instead of ec2 health checks
+    * Priority for scale in
+        * Most instances in the az with atleast one instance without scale in protection
+        * Oldest luanch config
+        * clostest to Next billing hour
+        * one instance at random
 
 NLB
     * Layer 4

@@ -93,6 +93,10 @@ KMS
     * Regional and Public service
     * symmetric and Asymmetric
     * KMS is FIPS 140-2 (l2) complaint
+    * Types
+        * CMK
+        * AWS managed
+        * AWs owned
     * Customer Master Key
         * Logical key
         * backed by actual Physical key
@@ -243,7 +247,12 @@ s3Event Notifications
     * object removed (* , Delete object , Delete marked)
     * Object Restore
     * Object repllication
+Supports the following destinations for your events:
+    * Amazon Simple Notification Service (Amazon SNS) topic
+    * Amazon Simple Queue Service (Amazon SQS) queue
+    * AWS Lambda    
 s3 Access Logs
+    * logs the access requests for a source bucket to a different bucket
 
 
 

@@ -1,0 +1,15 @@
+VPC
+    IGW
+        * 0 or 1 per VPC
+ec2
+    * Restart of a instance does not change public IP. Only stop and start does it
+    * EBS
+        * Provisioned IOPS can be attached to multiple instances using multi attach
+    * RAID 0  - storage performance
+    * RAID 1 - storage mirroring
+S3 
+    * Expediated retiervals - Qucikly access data within 1-5 minutes
+        * combine with provisioned capacity
+    * Endpoint policy
+DynamoDB
+    * Autoscaling not enabled bu default when created from CLI

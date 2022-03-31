@@ -2,15 +2,56 @@ Oreily
 skillset pro
 exam collection
 
-AWS inspector
-AWS god duty
-AWS SSM
-AWS Glue
-Global Accelerator vs CloudFront
-AWS EKS
-AWS EMR
-AWS ELB BorderGateway
+Security
+    * Amazon Detective - analysis log data and uses ML AI for security investigations. Link with flow logs guard duty
+    * Amazon GuardDuty - Threat Detection service across the entire aws account
+    * Amazon Inspector - Test secuirty state f EC2 instances
+    * Amazon Artifacts - AWS audit reports for its services
+    * Amazon Firewall -  Superset of WAF. AWS organisation level
+    * Amazon RAM -       Enable to Share AWS resources across AWS accounts within AWS organisation
+    * AWS Secuirty HUb - Superset of guardduty at organisation level
+
+Compute 
+    * Lightsail - Managed private Virtual server. with static IP, db and ssd storage. Deploy just the app
+    * Batch - Batch computing workloads
+    * Beanstalk - just deploy the app rest provided by beanstalk
+    * SAM - Creating for templates for Lambda local deployment
+    * Parallel cluster - Just a text file to depoly HPC applications
+Database
+    * DocumentDB - Like mongoDb
+    * Neptune - Graph database,  Apache TinkerPop Gremlin and W3C’s SPARQL.
+    * QLDB - Ledger database. Serverless
+Management
+    * AWS Health - Overall health of the AWS services
+    * AWS OpsWorks - Puppet or chef
+    * AWS service catalog - Control access to services
+    * AWS systems manager - group resources and track it
+    * Trusted advisor - Provides best practices recommendation  
+Analytics
+    * EMR - Big data. Hadoop,Spark
+    * Qucik sight - ML insights
+    * GLue - ETL tool
+
+Application services
+    * SES - Send emails to mass for marketing and transaction mails. Supports multi media attachment. No need to subscribe like SNS
+    * SWF - Previous genration of step functions
+
+Use cases
+    PAtterns and Anti patterns
+    RDS Failover   
+    DAta migrations 
+
+Needs
+    AWS RDS FAQs
+    AWS DynamoDB FAQ
+    AWS Cloudwatch FAQ
+    AWS IAM FAQ
+    AWS Backup plans
+    AWS Kinesis
+    AWS SQS
+    AWS SNS
+    Monitoring in RDS
 
 
-CloudWatch
-ec2 Cluster placement
+Cloudwatch
+ECS

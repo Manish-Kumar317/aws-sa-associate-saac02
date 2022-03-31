@@ -97,6 +97,8 @@ GlobalTables
     * Sub-second replication
 
 DynamoDB Accelrator (DAX)
+    * microseconds
+    * can be used with ec2 instance or with lambda
 
 Amazon Athena
     * Run Ad-hoc queires on Athena
@@ -119,6 +121,7 @@ Amazon RedShift
     * Server based. ONE AZ by default
     * Enhanched VPC routing
     * backups in s3
+    * Cross region snapshots
     * Resllience and Recovery
         * Restore from backups 
 

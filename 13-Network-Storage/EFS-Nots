@@ -1,4 +1,6 @@
 EFS architecture    
+    * CAn be mounted to EC2, ECS, Lambda, EKS
+    * Posix Style
     * EFS is based on NFSv4
     * Access points
     * Monuted in linux
@@ -6,7 +8,9 @@ EFS architecture
     * seperate life cycle as of the instance
     * private service to the VPC only and peering and direct connection
     * Linux only
-    * General perfomance and MAx I/O 
+    * Performance 
+        * General perfomance and 
+        * MAx I/O 
     * Burst and Provisened troughput modes
         * Burst - grow as the size increases
         * Provisioned - consistent

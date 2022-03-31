@@ -30,7 +30,7 @@ R53 Health checks
     * TCP, HTTP, HTTPS with string Matching (Body of the response)
 Failover routing
     * A second record is created for the same record
-    * If the primary health check fails then it is routed to 
+    * If the primary health check fails then it is routed to the second one
 Multivalue routing
     * Mixture of simple nd Failover
     * Many records with same name

@@ -85,7 +85,7 @@ Snowball / Edge / Snowmobile
         * Data encryption uses KMS
         * 1gbps 0r 10Gbps
         * 50 TB or 80 TB
-        * Uses cases - 10TP - 10PB
+        * Uses cases - 10TB - 10PB
         * multiple devices to multiple premises
         * only storage
     * Snowball Edge
@@ -141,6 +141,8 @@ Fsx for windows file server
     * Fully manged NATIVE windows file Servers
     * Integration with Directory Service and Self managed
     * Single or multi AZ
+    * Data de -dulpication redcuces or elmintas reduntant data
+    * RobustFileCopy - ROBOCopy to migrate data
     * VSS - User Driven restores
     * SMB - File system
     * Windows permissions

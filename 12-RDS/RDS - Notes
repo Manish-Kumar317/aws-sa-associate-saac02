@@ -19,12 +19,18 @@ RDS
     * Managed DB instances
     * Multiple engines
     * Amazon aurora
+    * Supports Aurora, MySQL, MariaDB, PostgreSQL, Oracle, Microsoft SQL Server
 RDS DB instance
     * Database CNAME
     * Different types similar to ec2 instances
     * different SSD EBS similar to ec2
+    * Types
+        * Standard
+        * Memory Optimised
+        * Burstable performance
 RDS MultiAZ
     * Primary and standby
+    * SYNCHORNOUS
     * No free tier
     * both have their own storage
     * primary to secondary snychornous replication
@@ -35,6 +41,12 @@ RDS MultiAZ
         * sync from priamry to secondary with almost no lag 
         * secondary writes data to disk
     * If primary fails cname is changed to secondary withing 120 seconds Usually
+    * The primary DB instance switches over automatically to the standby replica if any of the following conditions occur:
+       * An Availability Zone outage
+       * The primary DB instance fails
+       * The DB instance’s server type is changed
+       * The operating system of the DB instance is undergoing software patching
+       * A manual failover of the DB instance was initiated using Reboot with failover
 
 ------ Exam Power UP-------------
     * No free tier
@@ -109,6 +121,7 @@ Amazon RDS security
 
 Amazon aurora architecture
     * VERY diff from RDS
+    * MYSQL and PSQL
     * Uses a Cluster
     * Primary + 0 or more replicas (upto 15 replicas)
     * No local storage shared cluster volume (6 replicas across diff AZ)
@@ -122,6 +135,7 @@ Amazon aurora architecture
     * restore creates a new cluster
     * Backtrack canbe used to allow in place rewinds to a previous point of time
     * Fast clone make a new db much fast . It references the original storage and only diff aare stored
+    * Millisecond latency
 aurora serverless
     * Scalable ACU - Aurora Capacity Units
         * Allocated from a pool of ACUs 
@@ -144,6 +158,8 @@ aurora serverless
         * Variable wokrlaods
 Aurora GLobal Database
     * Global level replication
+    * Under a second latency
+    * NO automatic failover
     * 5 secondary REGIONS
     * replication is between 1s from primary to secondary
     * Use cases

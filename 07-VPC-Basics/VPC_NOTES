@@ -16,6 +16,7 @@ VPC Sizing
             * 3 AZ and one spare. 4
             * 3 teir(UI,backend,DB) and one spare. 4
             * 4*4 = 16 subnets
+    * Can add secondary CIDR blocks and remove it afterwards
 Custom VPC
     * default or dedicated tenancy - Create VPC on shared hardware or dedicated hardware
     * IPv4 private and public IPs 
@@ -67,6 +68,7 @@ NACL
     * Every rule in nacl get its number and priority is given to the lowest number. * is default number for deny all and will be the last rule
     * By default the all traffic will be allowed for both inbound and outbound
     * Default DENYALL cannot be removed at all
+    * Both inbound and outbound needs to be created
     * Response are sent on ephemeral ports
 
 ------ Exam POWER UP -------------------

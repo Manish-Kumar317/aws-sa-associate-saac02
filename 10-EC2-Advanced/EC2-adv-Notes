@@ -83,6 +83,8 @@ EC2 dedicated hosts
         * Placement groups
     * Hosts can be shared with other organizations
 Enhanced N/W and EBS optimised
+    * host interfacte is aware of virtualization
+    * creates virtual interface on the host for each ec2 instance
     * SR-IOV-NIC is virtualization aware(single root I/O virtualization)
         * Non enhanced n/W  
             * There is only one host NIC and all the NIC of virtual instances NIC need to communicate with this 
@@ -99,3 +101,5 @@ Enhanced N/W and EBS optimised
         * Dedicated capacity for EBS
         * by default
         * Required
+    * Elastic Fabric Adaptor
+        * For machine learning and high performance computing (HPC)
