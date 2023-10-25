@@ -31,6 +31,49 @@ Five principles
         * TCP - Connection based protocol. SLow but reliable. Packed will be in sequence
         * UDP - Connectionless protocol. Fast but unreliable
         * Diff b/w TCP and UDP - https://www.lifesize.com/en/blog/tcp-vs-udp/
+    * Session layer
+        * Manages the establishment, maintenance, and termination of communication sessions between devices
+    * Presentation layer
+        * The Presentation Layer handles data translation, encryption, and compression. 
+        * It ensures that data sent by one application is readable and usable by another, regardless of differences in data formats or character sets.
+    * Application Layer
+        * The Application Layer is the topmost layer and provides application services directly to end-users. It encompasses a wide range of network services, including email, web browsing, and file transfer. 
+        * Common application layer protocols include HTTP, SMTP, and FTP
+
+Physical Layer - 
+    This layer is like the very first step of a postman's job. 
+    Just as the physical layer deals with the physical transmission of data, the postman's job begins with physically collecting letters and packages from a mailbox or post office. 
+    It's all about the tangible items.
+
+Data Link Layer - 
+    In the OSI model, this layer ensures data integrity and helps organize data into frames.
+    In a postman's world, this is similar to sorting and categorizing the collected mail and packages into groups. 
+    It ensures that everything is labeled correctly and ready for delivery.
+
+Network Layer - 
+    This is like the layer of organization above the postman. 
+    It decides the best routes for mail delivery, just as a postal service or city planner determines the most efficient routes for the postman to follow. 
+    It manages the flow of mail in a broader sense.
+
+Transport Layer - 
+    In terms of postal work, this layer ensures that packages and letters are transported securely and efficiently. 
+    It's similar to how a postman carefully places mail into the mailbag or mail truck, ensuring that items are delivered in the correct order and without damage.
+
+Session Layer - 
+    This layer corresponds to the postman's ability to manage the interaction between different senders and receivers. 
+    For example, if there's a need to collect a signature upon delivery, the postman acts as the "session" manager, facilitating this interaction.
+
+Presentation Layer - 
+    In the OSI model, this layer deals with how data is presented to the user. 
+    For a postman, it might relate to the way mail is presented and packaged. 
+    This includes making sure mail is in good condition, neatly organized, and easy for the recipient to understand and open.
+
+Application Layer - 
+    This layer is all about the services and applications in a network. 
+    In the postman's world, it's like the various services the postal service offers, such as express mail, registered mail, or special delivery options. 
+    The postman is the one who makes these services available to customers.
+
+In summary, the OSI model can be likened to the tasks and processes a postman goes through when delivering mail. Each layer plays a role in ensuring the smooth, reliable, and efficient delivery of letters and packages, from physically collecting them to providing specialized services to customers
 
 Network Address Transalation (NAT)
     * STATIC NAT (AWS IGW)

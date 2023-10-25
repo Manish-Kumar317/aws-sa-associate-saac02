@@ -1,3 +1,5 @@
+IAM Policies 
+    * 
 {
     "version":
     "Statement": [
@@ -54,6 +56,13 @@ IAM roles
         * An emergency role during a break glass scenario
         * SSO or >5K users
         * Web identity federation
+    
+Service Linked role and Pass role
+ * An IAM role attached to an service
+
+Pass Role
+* To pass a role that a service like Cf can use it, Might have greater privleges than the user itself
+
 AWS Organizations
     * One management account handling zero or multiple accounts
     * Can create organizational units which can hold multiple AWS accounts
@@ -64,6 +73,15 @@ AWS Organizations
           but otherwise you cannot restrict the permsiions of root account user
         * They do not grant permissions they just imit the permmissions
     * Works great with AWS SSO
+
+AWS SCP
+    * SCP are account permission boundaries
+    * Limit even what a root user can do
+    * does to affect the management account
+    * Allow list and Deny list
+    * Don't grant permissions
+    * Establish which permisions can be granted
+
 CloudWatch
     * Regional service
     * EC2- CloudWatch does not collect memory utilization and disk space usage metrics. Need agent
@@ -94,3 +112,4 @@ CloudTrail
     * IAM , STS and Cloud fronts are global services and are logged to NVG
     * Not realtime
 
+AWS 
